@@ -35,10 +35,19 @@ export GOPATH="${HOME}/.go"
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
+# ssh autocomplete
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
 
+# git autocomplete
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
+    # if not found in /usr/local/etc, try the brew --prefix location
+    [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
+        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+}
+
+# kubernetes autocomplete
 source <(kubectl completion bash)
 source <(kops completion bash)
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -76,6 +85,7 @@ complete -C '/usr/local/bin/aws_completer' aws
 #   -----------------------------
 
 alias cp='cp -iv'                           # Preferred 'cp' implementation
+alias ccat='ccat --bg=dark'                 # Preferred 'ccat' implementation    
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
