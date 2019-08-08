@@ -47,12 +47,15 @@ fi
         . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
 }
 
-# kubernetes autocomplete
+# kubernetes & docker autocomplete
 source <(kubectl completion bash)
 source <(kops completion bash)
+
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
