@@ -1,6 +1,5 @@
 #  ---------------------------------------------------------------------------
 #
-#  Description:  This file holds all my BASH configurations and aliases
 #
 #  Sections:
 #  1.   Environment Configuration
@@ -20,12 +19,24 @@
 #   -------------------------------
 
 #   Change Prompt
+RED='\[\e[1;31m\]'
+BOLDYELLOW='\[\e[1;33m\]'
+GREEN='\[\e[0;32m\]'
+BLUE='\[\e[1;34m\]'
+DARKBROWN='\[\e[1;33m\]'
+DARKGRAY='\[\e[1;30m\]'
+CUSTOMCOLORMIX='\[\e[1;30m\]'
+DARKCUSTOMCOLORMIX='\[\e[1;32m\]'
+LIGHTBLUE="\[\033[1;36m\]"
+PURPLE='\[\e[1;35m\]'
+NC='\[\e[0m\]'
 #   ------------------------------------------------------------
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+#export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+PS1="${LIGHTBLUE}\\u ${BOLDYELLOW}[\\W] ${GREEN}\$(parse_git_branch)${DARKCUSTOMCOLORMIX}$ ${NC}"
 source <(kubectl completion bash)
 source <(kubectl completion bash
 )
