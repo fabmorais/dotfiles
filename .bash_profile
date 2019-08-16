@@ -133,6 +133,14 @@ alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable 
 alias show_options='shopt'                  # Show_options: display bash options settings
 alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
 alias cic='set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
+alias untar='tar -zxvf'                     # untar:        untar with the right arguments
+alias wget='wget -c'                        # wget:         download something but be able to resume if something goes wrong
+alias getpass='openssl rand -base64 20'     # getpass:      generate a random 20-character password
+alias svim='sudo vim'                       # sudo vim:     sudo vim something
+alias grep='grep --color=auto'              # grep:         Colorize the grep command output
+alias egrep='egrep --color=auto'            # egrep:        Colorize the egrep command output
+alias fgrep='fgrep --color=auto'            # fgrep:        Colorize the fgrep command output
+alias header='curl -I'                      # header:       get web server headers
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
 trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
@@ -261,8 +269,10 @@ ffe () { /usr/bin/find . -name '*'"$@" ; }  # ffe:      Find file whose name end
 #   6.  NETWORKING
 #   ---------------------------
 
-alias myip='curl https://ifconfig.co/'              # myip:         Public facing IP Address
+alias ipe='curl ipinfo.io/ip'                       # ipe:          External IP Address
+alias ipi='ipconfig getifaddr en0'                  # ipi:          Internal IP Address
 alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
+alias ping='ping -c 5'                              # ping:         ping 5 times only
 alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
 alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
 alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
@@ -271,6 +281,8 @@ alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on 
 alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
 alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
 alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
+alias speed='speedtest-cli --server 2406 --simple'  # speed:  check my network speed
+
 
 #   ii:  display useful host related informaton
 #   -------------------------------------------------------------------
