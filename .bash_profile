@@ -112,7 +112,11 @@ complete -C '/usr/local/bin/aws_completer' aws
 
 alias cp='cp -iv'                            # Preferred 'cp' implementation
 alias cdbash='cd ~/repo/private/bashProfile' # cd: go to my bash profile dir
-alias cddevops='cd ~/repo/devops-scripts'    # cd: go to my devops-scripts dir
+alias cdops='cd ~/repo/devops-scripts'       # cd: go to my devops-scripts dir
+alias cdcf='cd ~/repo/amaro-cloudformation'  # cd: go to my devops-scripts dir
+alias cdtf='cd ~/repo/amaro-tf'              # cd: go to my devops-scripts dir
+alias cdkube='cd ~/repo/amaro-kubernetes'    # cd: go to my devops-scripts dir
+alias cdbyrd='cd ~/repo/byrd'                  # cd: go to my devops-scripts dir
 alias ccat='ccat --bg=dark'                  # Preferred 'ccat' implementation
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
