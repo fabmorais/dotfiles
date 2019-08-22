@@ -18,6 +18,9 @@
 #   1.  ENVIRONMENT CONFIGURATION
 #   -------------------------------
 
+#   Remove zsh message on bash
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 #   Color Prompt
 RED='\[\e[1;31m\]'
 BOLDYELLOW='\[\e[1;33m\]'
@@ -111,12 +114,14 @@ complete -C '/usr/local/bin/aws_completer' aws
 #   -----------------------------
 
 alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias cdbash='cd ~/repo/private/bashProfile' # cd: go to my bash profile dir
-alias cdops='cd ~/repo/devops-scripts'       # cd: go to my devops-scripts dir
-alias cdcf='cd ~/repo/amaro-cloudformation'  # cd: go to my devops-scripts dir
-alias cdtf='cd ~/repo/amaro-tf'              # cd: go to my devops-scripts dir
-alias cdkube='cd ~/repo/amaro-kubernetes'    # cd: go to my devops-scripts dir
-alias cdbyrd='cd ~/repo/byrd'                # cd: go to my devops-scripts dir
+alias cdbash='cd ~/repo/private/bashProfile' # cdbash: go to my bash profile dir
+alias cdops='cd ~/repo/devops-scripts'       # cdops: go to my devops-scripts dir
+alias cdcf='cd ~/repo/amaro-cloudformation'  # cdcf: go to my cloudformation dir
+alias cdtf='cd ~/repo/amaro-tf'              # cdtf: go to my terraform dir
+alias cdkube='cd ~/repo/amaro-kubernetes'    # cdkube: go to my kubernetes dir
+alias cdbyrd='cd ~/repo/byrd'                # cdbyrd: go to my byrd dir
+alias cdssh='cd ~/.ssh'                      # cdssh: go to my .ssh config dir
+alias cdaws='cd ~/.aws'                      # cdaws: go to my .aws config dir
 alias ccat='ccat --bg=dark'                  # Preferred 'ccat' implementation
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
@@ -150,6 +155,7 @@ alias grep='grep --color=auto'               # grep:         Colorize the grep c
 alias egrep='egrep --color=auto'             # egrep:        Colorize the egrep command output
 alias fgrep='fgrep --color=auto'             # fgrep:        Colorize the fgrep command output
 alias header='curl -I'                       # header:       get web server headers
+alias vs='code'                              # code:         open visual studio code
 mcd () { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and jumps inside
 trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
