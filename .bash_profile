@@ -164,8 +164,15 @@ ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in M
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
 
+#   git:  automate git commands
+alias gg="git status"                        # gg:          show the state of the working dir
+alias gp="git pull"                          # gp:          download and integrate remote changes
+alias gd="git diff"                          # gd:          show changes between commits, commit and working tree
+alias ginit="git init"                       # ginit:       create an empty git repository or reinitialize an existing one
+alias git-branches='git branch -va'          # git-branches: show all the branches(individual projects withian a git repository)
+
 #   lr:  Full Recursive Directory Listing
-#   ------------------------------------------
+#   ------------------------------------------w
 alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
 
 #   mans:   Search manpage given in agument '1' for term given in argument '2' (case insensitive)
