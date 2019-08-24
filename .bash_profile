@@ -143,6 +143,7 @@ alias ~="cd ~"                               # ~:            Go Home
 alias c='clear'                              # c:            Clear terminal display
 alias q='exit'                               # q:            Exit terminal display
 alias h='history'                            # h:            history terminal display
+alias hs='history | grep'                    # hs:           history |grep terminal display
 alias p='cat'                                # p:            print terminal display
 alias which='type -all'                      # which:        Find executables
 alias path='echo -e ${PATH//:/\\n}'          # path:         Echo all executable Paths
@@ -162,7 +163,9 @@ mcd () { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and j
 trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
-alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
+alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
+alias update-bash='cp ~/repo/private/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'       # update-bash: copy my git .bash to local and source
+alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
