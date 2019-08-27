@@ -116,15 +116,16 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
 #   -----------------------------
 
 alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias cdbash='cd ~/repo/private/bashProfile' # cdbash: go to my bash profile dir
-alias cdops='cd ~/repo/devops-scripts'       # cdops: go to my devops-scripts dir
-alias cdcf='cd ~/repo/amaro-cloudformation'  # cdcf: go to my cloudformation dir
-alias cdtf='cd ~/repo/amaro-tf'              # cdtf: go to my terraform dir
-alias cdkube='cd ~/repo/amaro-kubernetes'    # cdkube: go to my kubernetes dir
-alias cdbyrd='cd ~/repo/byrd'                # cdbyrd: go to my byrd dir
-alias cdssh='cd ~/.ssh'                      # cdssh: go to my .ssh config dir
-alias cdaws='cd ~/.aws'                      # cdaws: go to my .aws config dir
-alias ccat='ccat --bg=dark'                  # Preferred 'ccat' implementation
+alias cdbash='cd ~/repo/private/bashProfile' # cdbash:      go to my bash profile dir
+alias cdops='cd ~/repo/devops-scripts'       # cdops:       go to my devops-scripts dir
+alias cdcf='cd ~/repo/amaro-cloudformation'  # cdcf:        go to my cloudformation dir
+alias cdtf='cd ~/repo/amaro-tf'              # cdtf:        go to my terraform dir
+alias cdkube='cd ~/repo/amaro-kubernetes'    # cdkube:      go to my kubernetes dir
+alias cdbyrd='cd ~/repo/byrd'                # cdbyrd:      go to my byrd dir
+alias cdssh='cd ~/.ssh'                      # cdssh:       go to my .ssh config dir
+alias cdaws='cd ~/.aws'                      # cdaws:       go to my .aws config dir
+alias p='cat'                                # p:           print terminal display
+alias pc='ccat --bg=dark'                    # pc:          print terminal display with color
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                        # Preferred 'ls' implementation
@@ -144,7 +145,6 @@ alias c='clear'                              # c:            Clear terminal disp
 alias q='exit'                               # q:            Exit terminal display
 alias h='history'                            # h:            history terminal display
 alias hs='history | grep'                    # hs:           history |grep terminal display
-alias p='cat'                                # p:            print terminal display
 alias which='type -all'                      # which:        Find executables
 alias path='echo -e ${PATH//:/\\n}'          # path:         Echo all executable Paths
 alias show_options='shopt'                   # Show_options: display bash options settings
