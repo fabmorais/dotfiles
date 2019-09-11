@@ -117,6 +117,7 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
 
 alias cp='cp -iv'                            # Preferred 'cp' implementation
 alias cdbash='cd ~/repo/private/bashProfile' # cdbash:      go to my bash profile dir
+alias repo='cd ~/repo/'                      # repo:        go to my repository
 alias cdops='cd ~/repo/devops-scripts'       # cdops:       go to my devops-scripts dir
 alias cdcf='cd ~/repo/amaro-cloudformation'  # cdcf:        go to my cloudformation dir
 alias cdtf='cd ~/repo/amaro-tf'              # cdtf:        go to my terraform dir
