@@ -35,6 +35,13 @@ PURPLE='\[\e[1;35m\]'
 NC='\[\e[0m\]'
 #   ------------------------------------------------------------
 
+# Powerline
+# export PATH=$PATH:$HOME/Library/Python/2.7/bin
+# powerline-daemon -q
+# POWERLINE_BASH_CONTINUATION=1
+# POWERLINE_BASH_SELECT=1
+# . /Users/fabio.morais/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
