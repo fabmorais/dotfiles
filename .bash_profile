@@ -101,6 +101,13 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
     export PATH="$PATH:/usr/local/bin/"
     export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/fabio.morais/google-cloud-sdk/path.bash.inc' ]; then . '/Users/fabio.morais/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/fabio.morais/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/fabio.morais/google-cloud-sdk/completion.bash.inc'; fi
+
+
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
     export EDITOR=/usr/bin/nano 
@@ -123,7 +130,7 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
 #   -----------------------------
 
 alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias cdbash='cd ~/repo/private/bashProfile' # cdbash:      go to my bash profile dir
+alias cdbash='cd ~/repo/bashProfile'         # cdbash:      go to my bash profile dir
 alias repo='cd ~/repo/'                      # repo:        go to my repository
 alias cdops='cd ~/repo/devops-scripts'       # cdops:       go to my devops-scripts dir
 alias cdcf='cd ~/repo/amaro-cloudformation'  # cdcf:        go to my cloudformation dir
@@ -172,7 +179,7 @@ trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
-alias update-bash='cp ~/repo/private/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'       # update-bash: copy my git .bash to local and source
+alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'       # update-bash: copy my git .bash to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
 
 #   git:  automate git commands
