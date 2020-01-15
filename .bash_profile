@@ -48,13 +48,11 @@ parse_git_branch() {
 
 #export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 PS1="${LIGHTBLUE}\\u ${BOLDYELLOW}[\\w] ${GREEN}\$(parse_git_branch)${DARKCUSTOMCOLORMIX}$ ${NC}"
-source <(kubectl completion bash)
-source <(kubectl completion bash
-)
 
 # Go development
 export GOPATH="${HOME}/.go"
-export GOROOT="$(brew --prefix golang)/libexec"
+export GOROOT=/usr/local/go
+#export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # ssh autocomplete
@@ -70,7 +68,11 @@ fi
 }
 
 # kubernetes & docker autocomplete
-source <(kubectl completion bash)
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+  . /usr/local/share/bash-completion/bash_completion
+fi
+
+source ~/.kube/kubectl_autocompletion
 source <(kops completion bash)
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -183,6 +185,7 @@ alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'                         # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'                     # change kubernetes context to production
+alias currentcon='kubectl config current-context'                                                               # get the current context
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
