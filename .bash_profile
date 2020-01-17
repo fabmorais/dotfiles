@@ -66,6 +66,9 @@ fi
     [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
         . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
 }
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
 # kubernetes & docker autocomplete
 if [ -f /usr/local/share/bash-completion/bash_completion ]; then
