@@ -184,12 +184,14 @@ trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
+alias novpn='sudo killall openvpn'           # VPN:          Kill openVPN connection
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
 alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'                         # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'                     # change kubernetes context to production
 alias currentcon='kubectl config current-context'                                                               # get the current context
+alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN                                                                        
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
