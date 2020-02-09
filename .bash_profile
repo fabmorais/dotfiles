@@ -183,6 +183,7 @@ mcd () { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and j
 trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
+alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
 alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
