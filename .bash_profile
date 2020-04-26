@@ -1,4 +1,4 @@
-#  ---------------------------------------------------------------------------
+    #  ---------------------------------------------------------------------------
 #
 #
 #  Sections:
@@ -20,6 +20,9 @@
 
 #   Remove zsh message on bash
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+#   Deploy Starship
+eval "$(starship init bash)"
 
 #   Color Prompt
 RED='\[\e[1;31m\]'
@@ -184,14 +187,21 @@ trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
-alias novpn='sudo killall openvpn'           # VPN:          Kill openVPN connection
+alias nvpn='sudo killall openvpn'           # VPN:          Kill openVPN connection
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
 alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
-alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'                         # change kubernetes context to develop
-alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'                     # change kubernetes context to production
-alias currentcon='kubectl config current-context'                                                               # get the current context
-alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN                                                                        
+
+alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN
+alias ve='python3 -m venv ./venv'
+alias va='source ./venv/bin/activate'                                                                
+
+#  kubectl:  automate kube control commands
+alias k='kubectl'                                                                            # change kubernetes context to develop
+alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
+alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
+alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to test
+alias kubecon='kubectl config current-context'                                               # get the current context
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
@@ -199,6 +209,30 @@ alias gp="git pull"                          # gp:          download and integra
 alias gd="git diff"                          # gd:          show changes between commits, commit and working tree
 alias ginit="git init"                       # ginit:       create an empty git repository or reinitialize an existing one
 alias git-branches='git branch -va'          # git-branches: show all the branches(individual projects withian a git repository)
+alias git-chdevelop='git checkout develop'           # change to develop branch
+alias git-chmaster='git checkout master'             # change to master branch
+
+#   mcmakler:  git repository
+alias infrastructure="cd repo/infrastructure"
+alias mcmakler-config="cd repo/mcmakler-config"
+alias znogit="cd repo/znogit"
+alias haproxy="cd repo/haproxy-gateway"
+alias docker-images="cd repo/docker-images"
+alias repobackup="cd repo/backup"
+
+#   HSTR: history
+alias hh=hstr                    # hh to be alias for hstr
+export HSTR_CONFIG=hicolor       # get more colors
+shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+# ensure synchronization between bash memory and history file
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+# if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 
 #   lr:  Full Recursive Directory Listing
 #   ------------------------------------------w
