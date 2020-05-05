@@ -23,6 +23,8 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 #   Deploy Starship
 eval "$(starship init bash)"
+#source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+#PS1='$(kube_ps1)'$PS1
 
 #   Color Prompt
 RED='\[\e[1;31m\]'
@@ -57,6 +59,9 @@ export GOPATH="${HOME}/.go"
 export GOROOT=/usr/local/go
 #export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+# Flutter development
+export PATH=/Users/fabio.morais/mobile-dev/flutter/bin:$PATH
 
 # ssh autocomplete
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -198,10 +203,10 @@ alias va='source ./venv/bin/activate'
 
 #  kubectl:  automate kube control commands
 alias k='kubectl'                                                                            # change kubernetes context to develop
+alias kcon='kubectl config current-context'                                              # get the current context
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
 alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to test
-alias kubecon='kubectl config current-context'                                               # get the current context
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
