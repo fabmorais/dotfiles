@@ -63,6 +63,14 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # Flutter development
 export PATH=/Users/fabio.morais/mobile-dev/flutter/bin:$PATH
 
+# Maven development
+export M2_HOME="/usr/local/bin/apache-maven-3.6.3"
+PATH="${M2_HOME}/bin:${PATH}"
+export PATH
+
+# vault autocomplete
+complete -C /usr/local/bin/vault vault
+
 # ssh autocomplete
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
