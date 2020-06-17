@@ -47,6 +47,9 @@ NC='\[\e[0m\]'
 # POWERLINE_BASH_SELECT=1
 # . /Users/fabio.morais/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
 
+# Java Environment
+eval "$(jenv init -)"
+
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
@@ -131,7 +134,7 @@ if [ -f '/Users/fabio.morais/google-cloud-sdk/completion.bash.inc' ]; then . '/U
 
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
-    export EDITOR=/usr/bin/nano 
+    export EDITOR=/usr/local/bin/vim
 
 #   Set default blocksize for ls, df, du
 #   from this: http://hints.macworld.com/comment.php?mode=view&cid=24491
@@ -211,7 +214,7 @@ alias va='source ./venv/bin/activate'
 
 #  kubectl:  automate kube control commands
 alias k='kubectl'                                                                            # change kubernetes context to develop
-alias kcon='kubectl config current-context'                                              # get the current context
+alias kcon='kubectl config current-context'                                                  # get the current context
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
 alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to test
