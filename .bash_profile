@@ -233,12 +233,12 @@ alias git-chdevelop='git checkout develop'           # change to develop branch
 alias git-chmaster='git checkout master'             # change to master branch
 
 #   mcmakler:  git repository
-alias infrastructure="cd repo/infrastructure"
-alias mcmakler-config="cd repo/mcmakler-config"
-alias znogit="cd repo/znogit"
-alias haproxy="cd repo/haproxy-gateway"
-alias docker-images="cd repo/docker-images"
-alias repobackup="cd repo/backup"
+alias infrastructure="cd ~/repo/infrastructure"
+alias mcmakler-config="cd ~/repo/mcmakler-config"
+alias znogit="cd ~/repo/znogit"
+alias haproxy="cd ~/repo/haproxy-gateway"
+alias docker-images="cd ~/repo/docker-images"
+alias repobackup="cd ~/repo/backup"
 
 #   HSTR: history
 alias hh=hstr                    # hh to be alias for hstr
