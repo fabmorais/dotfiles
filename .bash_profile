@@ -210,6 +210,12 @@ alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn -
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
 
+#  gcloud:  speed list, ssh access to instance
+alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                         # list instances in mcmakler-prime
+alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime'  # access instance in zone europe-west3-a in mcmakler-prime
+alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime'  # access instance in zone europe-west3-b in mcmakler-prime
+alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
+
 #  kubectl:  automate kube control commands
 alias k='kubectl'                                                                            # change kubernetes context to develop
 alias kcon='kubectl config current-context'                                                  # get the current context
