@@ -22,7 +22,7 @@
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 #   Deploy Starship
-eval "$(starship init bash)"
+#eval "$(starship init bash)"
 #source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
 #PS1='$(kube_ps1)'$PS1
 
@@ -71,13 +71,16 @@ export M2_HOME="/usr/local/bin/apache-maven-3.6.3"
 PATH="${M2_HOME}/bin:${PATH}"
 export PATH
 
+# Kubebuilder 
+export PATH=$PATH:/usr/local/kubebuilder/bin
+
 # vault autocomplete
 complete -C /usr/local/bin/vault vault
 
 # ssh autocomplete
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
-fi
+ if [ -f $(brew --prefix)/etc/bash_completion ]; then
+ . $(brew --prefix)/etc/bash_completion
+ fi
 
 # git autocomplete
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
@@ -95,6 +98,7 @@ if [ -f /usr/local/share/bash-completion/bash_completion ]; then
 fi
 
 source ~/.kube/kubectl_autocompletion
+complete -F __start_kubectl k
 source <(kops completion bash)
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -217,7 +221,8 @@ alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=m
 alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
 
 #  kubectl:  automate kube control commands
-alias k='kubectl'                                                                            # change kubernetes context to develop
+alias k='kubectl $@'                                                                         # shortcut for kubectl
+alias kg='kubectl get'                                                                       # shortcut for kubectl get
 alias kcon='kubectl config current-context'                                                  # get the current context
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
@@ -227,10 +232,14 @@ alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_stagi
 alias gg="git status"                        # gg:          show the state of the working dir
 alias gp="git pull"                          # gp:          download and integrate remote changes
 alias gd="git diff"                          # gd:          show changes between commits, commit and working tree
+alias gl="git log"                           # gl: 
+alias gco="git checkout"                     # gco:
+alias gba="git branch"                       # gba:
 alias ginit="git init"                       # ginit:       create an empty git repository or reinitialize an existing one
 alias git-branches='git branch -va'          # git-branches: show all the branches(individual projects withian a git repository)
-alias git-chdevelop='git checkout develop'           # change to develop branch
-alias git-chmaster='git checkout master'             # change to master branch
+alias git-chdevelop='git checkout develop'   # change to develop branch
+alias git-chmaster='git checkout master'     # change to master branch
+alias gl-fancy='git log --oneline --decorate --all --graph'         # git log fancy
 
 #   mcmakler:  git repository
 alias infrastructure="cd ~/repo/infrastructure"
