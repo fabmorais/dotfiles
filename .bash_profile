@@ -204,7 +204,7 @@ mcd () { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and j
 trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
-alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
+# alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
 alias nvpn='sudo killall openvpn'           # VPN:          Kill openVPN connection
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
 alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
@@ -226,7 +226,8 @@ alias kg='kubectl get'                                                          
 alias kcon='kubectl config current-context'                                                  # get the current context
 alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
 alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
-alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to test
+alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to staging
+alias kubetest='kubectl config use-context gke_mcmakler-prime_europe-west3_testing-6etr'     # change kubernetes context to test
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
