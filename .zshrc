@@ -1,3 +1,18 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+#.zshrc
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -8,7 +23,7 @@ export ZSH="/Users/fabio.morais/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -42,7 +57,7 @@ ZSH_THEME="robbyrussell"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -68,7 +83,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -88,6 +103,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
+# gcloud
+source '/Users/fabio.morais/google-cloud-sdk/path.zsh.inc'
+source '/Users/fabio.morais/google-cloud-sdk/completion.zsh.inc'
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -145,12 +163,11 @@ trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the
 ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
-alias nvpn='sudo killall openvpn'           # VPN:          Kill openVPN connection
-alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'           # AFK computer
-alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
-alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
-
-alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN
+alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
+alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'              # VPN: connect to OpenVPN
+alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
+alias update-zsh='cp ~/repo/bashProfile/.zshrc ~/.zshrc && source ~/.zshrc'                           # update-zsh: copy my git .zshrc to local and source
+alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
 
@@ -161,20 +178,34 @@ alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=m
 alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
 
 #  kubectl:  automate kube control commands
-alias k='kubectl'                                                                            # change kubernetes context to develop
-alias kcon='kubectl config current-context'                                                  # get the current context
-alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
-alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
-alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to test
+alias k='kubectl'                                          # change kubernetes context to develop
+alias kg='kubectl get'                                     # shortcut for kubectl get
+alias ke='kubectl edit'                                    # shortcut for kubectl edit
+alias kd='kubectl describe'                                # shortcut for kubectl describe
+alias ks='kubectl scale'                                   # shortcut for kubectl scale
+alias kl='kubectl logs'                                    # shortcut for kubectl logs
+alias kt='kubectl top'                                     # shortcut for kubectl top
+alias kx='kubectl exec'                                    # shortcut for kubectl exec
+alias kap='kubectl apply -f'                               # shortcut for kubectl apply -f
+alias kcon='kubectl config current-context'                # get the current context
+alias kubedev='kubectl config use-context gke-develop'     # change kubernetes context to develop
+alias kubeprod='kubectl config use-context gke-production' # change kubernetes context to production
+alias kubestag='kubectl config use-context gke-staging'    # change kubernetes context to test
+alias kubetest='kubectl config use-context gke-testing'    # change kubernetes context to test
 
 #   git:  automate git commands
-alias gg="git status"                        # gg:          show the state of the working dir
-alias gp="git pull"                          # gp:          download and integrate remote changes
-alias gd="git diff"                          # gd:          show changes between commits, commit and working tree
-alias ginit="git init"                       # ginit:       create an empty git repository or reinitialize an existing one
-alias git-branches='git branch -va'          # git-branches: show all the branches(individual projects withian a git repository)
-alias git-chdevelop='git checkout develop'           # change to develop branch
-alias git-chmaster='git checkout master'             # change to master branch
+alias gg="git status"                                       # gg:          show the state of the working dir
+alias gp="git pull"                                         # gp:          download and integrate remote changes
+alias gd="git diff"                                         # gd:          show changes between commits, commit and working tree
+alias gl="git log"                                          # gl: 
+alias gco="git checkout"                                    # gco:
+alias gba="git branch"                                      # gba:
+alias ginit="git init"                                      # ginit:       create an empty git repository or reinitialize an existing one
+alias git-branches='git branch -va'                         # git-branches: show all the branches(individual projects withian a git repository)
+alias gco-dev='git checkout develop'                        # change to develop branch
+alias gco-stag='git checkout staging'                       # change to develop branch
+alias gco-master='git checkout master'                      # change to master branch
+alias gl-fancy='git log --oneline --decorate --all --graph' # git log fancy
 
 #   mcmakler:  git repository
 alias infrastructure="cd ~/repo/infrastructure"
@@ -183,3 +214,44 @@ alias znogit="cd ~/repo/znogit"
 alias haproxy="cd ~/repo/haproxy-gateway"
 alias docker-images="cd ~/repo/docker-images"
 alias repobackup="cd ~/repo/backup"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+#   ---------------------------
+#          NETWORKING
+#   ---------------------------
+
+alias ipe='curl ipinfo.io/ip'                       # ipe:          External IP Address
+alias ipi='ipconfig getifaddr en0'                  # ipi:          Internal IP Address
+alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
+alias ping='ping -c 5'                              # ping:         ping 5 times only
+alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
+alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
+alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
+alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
+alias speed='speedtest-cli --server 2406 --simple'  # speed:  check my network speed
+
+# HSTR configuration - add this to ~/.bashrc
+alias hh=hstr                    # hh to be alias for hstr
+export HSTR_CONFIG=hicolor       # get more colors
+# shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+# ensure synchronization between bash memory and history file
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+# if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+# if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+# if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+export PATH=$(brew --prefix openvpn)/sbin:$PATH
+
+# kubectl
+source <(kubectl completion zsh)
+[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
+complete -F __start_kubectl k

@@ -221,13 +221,13 @@ alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=m
 alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
 
 #  kubectl:  automate kube control commands
-alias k='kubectl $@'                                                                         # shortcut for kubectl
-alias kg='kubectl get'                                                                       # shortcut for kubectl get
-alias kcon='kubectl config current-context'                                                  # get the current context
-alias kubedev='kubectl config use-context gke_mcmakler-prime_europe-west3_develop-1ifh'      # change kubernetes context to develop
-alias kubeprod='kubectl config use-context gke_mcmakler-prime_europe-west3_production-so09'  # change kubernetes context to production
-alias kubestag='kubectl config use-context gke_mcmakler-prime_europe-west3_staging-3s5h'     # change kubernetes context to staging
-alias kubetest='kubectl config use-context gke_mcmakler-prime_europe-west3_testing-6etr'     # change kubernetes context to test
+alias k='kubectl $@'                                        # shortcut for kubectl
+alias kg='kubectl get'                                      # shortcut for kubectl get
+alias kcon='kubectl config current-context'                 # get the current context
+alias kubedev='kubectl config use-context gke-develop'      # change kubernetes context to develop
+alias kubeprod='kubectl config use-context gke-production'  # change kubernetes context to production
+alias kubestag='kubectl config use-context gke-staging'     # change kubernetes context to staging
+alias kubetest='kubectl config use-context gke-testing'     # change kubernetes context to test
 
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
