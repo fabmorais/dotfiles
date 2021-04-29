@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 #.zshrc
+export PATH="/usr/local/sbin:$PATH"
 # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 # # This loads nvm
@@ -15,6 +16,12 @@ export NVM_DIR="$HOME/.nvm"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Go development
+export GOPATH="${HOME}/.go"
+export GOROOT=/usr/local/go
+#export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/fabio.morais/.oh-my-zsh"
@@ -255,3 +262,19 @@ export PATH=$(brew --prefix openvpn)/sbin:$PATH
 source <(kubectl completion zsh)
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 complete -F __start_kubectl k
+
+
+### Nerd section ###
+excuse() { echo $(telnet bofh.jeffballard.us 666 2>/dev/null) | grep --color -o "Your excuse is:.*$" ; }
+starwars() { telnet towel.blinkenlights.nl ; }
+weather() { curl wttr.in/$1 ; }
+
+### Tools ###
+rbrew_upgrade() {
+  brew update && brew upgrade
+}
+rbrew_doctor() {
+  brew update && brew upgrade && brew cleanup; brew doctor
+}
+
+
