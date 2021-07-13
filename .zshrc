@@ -202,6 +202,9 @@ alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
 # receive the key of a developer
 alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
 
+# broot
+alias br='broot -dhp'
+alias bs='broot --sizes'
 
 # kubectl:  automate kube control commands
 alias k='kubectl'                                          # change kubernetes context to develop
