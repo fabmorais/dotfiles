@@ -19,8 +19,9 @@ export NVM_DIR="$HOME/.nvm"
 
 # Go development
 export GOPATH="${HOME}/.go"
-export GOROOT=/usr/local/go
-#export GOROOT="$(brew --prefix golang)/libexec"
+#export GOROOT=/usr/local/go
+#export GOROOT=/usr/local/opt/go/libexec
+export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Path to your oh-my-zsh installation.
@@ -119,6 +120,14 @@ source '/Users/fabio.morais/google-cloud-sdk/completion.zsh.inc'
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+
+# Changing "ls" to "exa"
+alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -l --color=always --group-directories-first'  # long format
+alias lt='exa -aT --color=always --group-directories-first' # tree listing
+alias l.='exa -a | egrep "^\."'
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -134,7 +143,7 @@ alias p='cat'                                # p:           print terminal displ
 alias pc='ccat --bg=dark'                    # pc:          print terminal display with color
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
-alias ll='ls -FGlAhp'                        # Preferred 'ls' implementation
+# alias ll='ls -FGlAhp'                        # Preferred 'ls' implementation
 alias less='less -FSRXc'                     # Preferred 'less' implementation
 cd() { builtin cd "$@"; ll; }                # Always list directory contents upon 'cd'
 alias cd..='cd ../'                          # Go back 1 directory level (for fast typers)
@@ -177,14 +186,24 @@ alias update-zsh='cp ~/repo/bashProfile/.zshrc ~/.zshrc && source ~/.zshrc'     
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
+alias watch='watch '                                                                                  # enable watch to work with alias
+alias df='df -h'                                                                                      # human-readable sizes
+alias free='free -m'                                                                                  # show sizes in MB
 
-#  gcloud:  speed list, ssh access to instance
+# gcloud:  speed list, ssh access to instance
 alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                         # list instances in mcmakler-prime
 alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime'  # access instance in zone europe-west3-a in mcmakler-prime
 alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime'  # access instance in zone europe-west3-b in mcmakler-prime
 alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
 
-#  kubectl:  automate kube control commands
+# gpg encryption
+# verify signature for isos
+alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
+# receive the key of a developer
+alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
+
+
+# kubectl:  automate kube control commands
 alias k='kubectl'                                          # change kubernetes context to develop
 alias kg='kubectl get'                                     # shortcut for kubectl get
 alias ke='kubectl edit'                                    # shortcut for kubectl edit
@@ -200,7 +219,7 @@ alias kubeprod='kubectl config use-context gke-production' # change kubernetes c
 alias kubestag='kubectl config use-context gke-staging'    # change kubernetes context to test
 alias kubetest='kubectl config use-context gke-testing'    # change kubernetes context to test
 
-#   git:  automate git commands
+# git: automate git commands
 alias gg="git status"                                       # gg:          show the state of the working dir
 alias gp="git pull"                                         # gp:          download and integrate remote changes
 alias gd="git diff"                                         # gd:          show changes between commits, commit and working tree
@@ -214,7 +233,7 @@ alias gco-stag='git checkout staging'                       # change to develop 
 alias gco-master='git checkout master'                      # change to master branch
 alias gl-fancy='git log --oneline --decorate --all --graph' # git log fancy
 
-#   mcmakler:  git repository
+# mcmakler: git repository
 alias infrastructure="cd ~/repo/infrastructure"
 alias mcmakler-config="cd ~/repo/mcmakler-config"
 alias znogit="cd ~/repo/znogit"
