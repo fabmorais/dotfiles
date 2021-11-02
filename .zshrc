@@ -17,6 +17,10 @@ export NVM_DIR="$HOME/.nvm"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# GNU Tools
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
 # Go development
 export GOPATH="${HOME}/.go"
 #export GOROOT=/usr/local/go
@@ -25,7 +29,7 @@ export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/fabio.morais/.oh-my-zsh"
+export ZSH="/Users/fabio/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -112,8 +116,8 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 # gcloud
-source '/Users/fabio.morais/google-cloud-sdk/path.zsh.inc'
-source '/Users/fabio.morais/google-cloud-sdk/completion.zsh.inc'
+source '/Users/fabio/google-cloud-sdk/path.zsh.inc'
+source '/Users/fabio/google-cloud-sdk/completion.zsh.inc'
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -180,7 +184,7 @@ ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in M
 alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
 alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 default in macos
 alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
-alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'              # VPN: connect to OpenVPN
+alias vpn='sudo openvpn --config /Users/fabio/Documents/vpn/client.ovpn --daemon'              # VPN: connect to OpenVPN
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
 alias update-zsh='cp ~/repo/bashProfile/.zshrc ~/.zshrc && source ~/.zshrc'                           # update-zsh: copy my git .zshrc to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
