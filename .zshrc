@@ -21,6 +21,9 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
+# Tfenv
+export PATH="$HOME/.tfenv/bin:$PATH"
+
 # Go development
 export GOPATH="${HOME}/.go"
 #export GOROOT=/usr/local/go
