@@ -26,6 +26,8 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 # Tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
+#tf shell tab
+# terraform -install-autocomplete
 
 # Go development
 export GOPATH="${HOME}/.go"
@@ -170,7 +172,7 @@ alias c='clear'                              # c:            Clear terminal disp
 alias q='exit'                               # q:            Exit terminal display
 alias h='history'                            # h:            history terminal display
 alias hs='history | grep'                    # hs:           history |grep terminal display
-alias which='type -all'                      # which:        Find executables
+# alias which='type -all'                      # which:        Find executables
 alias path='echo -e ${PATH//:/\\n}'          # path:         Echo all executable Paths
 alias show_options='shopt'                   # Show_options: display bash options settings
 alias fix_stty='stty sane'                   # fix_stty:     Restore terminal settings when screwed up
@@ -179,6 +181,7 @@ alias untar='tar -zxvf'                      # untar:        untar with the righ
 alias wget='wget -c'                         # wget:         download something but be able to resume if something goes wrong
 alias getpass='openssl rand -base64 20'      # getpass:      generate a random 20-character password
 alias svim='sudo vim'                        # sudo vim:     sudo vim something
+alias v='nvim'                               # neovim:       neovim 
 alias grep='grep --color=auto'               # grep:         Colorize the grep command output
 alias egrep='egrep --color=auto'             # egrep:        Colorize the egrep command output
 alias fgrep='fgrep --color=auto'             # fgrep:        Colorize the fgrep command output
