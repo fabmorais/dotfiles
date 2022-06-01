@@ -134,33 +134,26 @@ source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completi
 #
 
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
+alias ls='exa -al --icons --color=always --group-directories-first' # my preferred listing
+alias la='exa -a --icons --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -l --icons --color=always --group-directories-first'  # long format
+alias lt='exa -aT --icons --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias cdfiles='cd ~/repo/dotfiles'           # cdfiles:     go to my dot files
 alias repo='cd ~/repo/'                      # repo:        go to my repository
-alias cdops='cd ~/repo/devops-scripts'       # cdops:       go to my devops-scripts dir
-alias cdinfra='cd ~/repo/infrastructure'     # cdinfra:     go to my infra dir
-alias cdbyrd='cd ~/repo/byrd'                # cdbyrd:      go to my byrd dir
-alias cdssh='cd ~/.ssh'                      # cdssh:       go to my .ssh config dir
-alias cdaws='cd ~/.aws'                      # cdaws:       go to my .aws config dir
-alias p='cat'                                # p:           print terminal display
 alias pc='ccat --bg=dark'                    # pc:          print terminal display with color
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
 # alias ll='ls -FGlAhp'                        # Preferred 'ls' implementation
 alias less='less -FSRXc'                     # Preferred 'less' implementation
 cd() { builtin cd "$@"; ll; }                # Always list directory contents upon 'cd'
-alias cd..='cd ../'                          # Go back 1 directory level (for fast typers)
-alias ..='cd ../'                            # Go back 1 directory level
-alias ...='cd ../../'                        # Go back 2 directory levels
+# alias cd..='cd ../'                          # Go back 1 directory level (for fast typers)
+# alias ..='cd ../'                            # Go back 1 directory level
+# alias ...='cd ../../'                        # Go back 2 directory levels
 alias .3='cd ../../../'                      # Go back 3 directory levels
 alias .4='cd ../../../../'                   # Go back 4 directory levels
 alias .5='cd ../../../../../'                # Go back 5 directory levels
@@ -249,14 +242,6 @@ alias gco-stag='git checkout staging'                       # change to develop 
 alias gco-master='git checkout master'                      # change to master branch
 alias gl-fancy='git log --oneline --decorate --all --graph' # git log fancy
 
-# mcmakler: git repository
-alias infrastructure="cd ~/repo/infrastructure"
-alias mcmakler-config="cd ~/repo/mcmakler-config"
-alias znogit="cd ~/repo/znogit"
-alias haproxy="cd ~/repo/haproxy-gateway"
-alias docker-images="cd ~/repo/docker-images"
-alias repobackup="cd ~/repo/backup"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -280,11 +265,10 @@ alias speed='speedtest-cli --server 2406 --simple'  # speed:  check my network s
 alias matrix='cmatrix -ab'			    # matrix
 
 # HSTR configuration - add this to ~/.bashrc
-alias hh=hstr                    # hh to be alias for hstr
 export HSTR_CONFIG=hicolor       # get more colors
 # shopt -s histappend              # append new history items to .bash_history
 export HISTCONTROL=ignorespace   # leading space hides commands from history
-export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTFILESIZE=100000       # increase history file size (default is 500)
 export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 # ensure synchronization between bash memory and history file
 export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
@@ -299,6 +283,8 @@ source <(kubectl completion zsh)
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 complete -F __start_kubectl k
 
+# kubectl new plugin gcp
+USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 ### Nerd section ###
 excuse() { echo $(telnet bofh.jeffballard.us 666 2>/dev/null) | grep --color -o "Your excuse is:.*$" ; }
@@ -313,4 +299,6 @@ rbrew_doctor() {
   brew update && brew upgrade && brew cleanup; brew doctor
 }
 
+# To install useful key bindings and fuzzy completion:
+# $(brew --prefix)/opt/fzf/install
 
