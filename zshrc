@@ -103,7 +103,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -195,7 +195,7 @@ alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 defaul
 alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
 alias vpn='sudo openvpn --config /Users/fabio/Documents/vpn/client.ovpn --daemon'                     # VPN: connect to OpenVPN
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
-alias update-zsh='cp ~/repo/dotfiles/.zshrc ~/.zshrc && source ~/.zshrc'                              # update-zsh: copy my git .zshrc to local and source
+alias update-zsh='cp ~/Projects/dotfiles/zshrc ~/.zshrc && source ~/.zshrc'                           # update-zsh: copy my git .zshrc to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
