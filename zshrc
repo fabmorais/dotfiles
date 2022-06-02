@@ -302,3 +302,4 @@ rbrew_doctor() {
 # To install useful key bindings and fuzzy completion:
 # $(brew --prefix)/opt/fzf/install
 
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
