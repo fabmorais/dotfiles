@@ -144,16 +144,11 @@ alias l.='exa -a | egrep "^\."'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias repo='cd ~/repo/'                      # repo:        go to my repository
 alias pc='ccat --bg=dark'                    # pc:          print terminal display with color
 alias mv='mv -iv'                            # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
-# alias ll='ls -FGlAhp'                        # Preferred 'ls' implementation
 alias less='less -FSRXc'                     # Preferred 'less' implementation
 cd() { builtin cd "$@"; ll; }                # Always list directory contents upon 'cd'
-# alias cd..='cd ../'                          # Go back 1 directory level (for fast typers)
-# alias ..='cd ../'                            # Go back 1 directory level
-# alias ...='cd ../../'                        # Go back 2 directory levels
 alias .3='cd ../../../'                      # Go back 3 directory levels
 alias .4='cd ../../../../'                   # Go back 4 directory levels
 alias .5='cd ../../../../../'                # Go back 5 directory levels
@@ -165,7 +160,7 @@ alias c='clear'                              # c:            Clear terminal disp
 alias q='exit'                               # q:            Exit terminal display
 alias h='history'                            # h:            history terminal display
 alias hs='history | grep'                    # hs:           history |grep terminal display
-# alias which='type -all'                      # which:        Find executables
+# alias which='type -all'                    # which:        Find executables
 alias path='echo -e ${PATH//:/\\n}'          # path:         Echo all executable Paths
 alias show_options='shopt'                   # Show_options: display bash options settings
 alias fix_stty='stty sane'                   # fix_stty:     Restore terminal settings when screwed up
@@ -188,19 +183,19 @@ alias python='/usr/local/bin/python3.7'      # python3:      Make Python3 defaul
 alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
 alias vpn='sudo openvpn --config /Users/fabio/Documents/vpn/client.ovpn --daemon'                     # VPN: connect to OpenVPN
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
-alias update-zsh='cp ~/Projects/dotfiles/zshrc ~/.zshrc && source ~/.zshrc'                           # update-zsh: copy my git .zshrc to local and source
+alias update-zsh='cp ~/Projects/dotfiles/osx/zshrc ~/.zshrc && source ~/.zshrc'                       # update-zsh: copy my git .zshrc to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
-alias ve='python3 -m venv ./venv'
-alias va='source ./venv/bin/activate'                                                                
+alias ve='python3 -m venv ./venv'                                                                     # enable virtual env 
+alias va='source ./venv/bin/activate'                                                                 # activate virtual env
 alias watch='watch '                                                                                  # enable watch to work with alias
 alias df='df -h'                                                                                      # human-readable sizes
 alias free='free -m'                                                                                  # show sizes in MB
 
 # gcloud:  speed list, ssh access to instance
-alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                         # list instances in mcmakler-prime
-alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime'  # access instance in zone europe-west3-a in mcmakler-prime
-alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime'  # access instance in zone europe-west3-b in mcmakler-prime
-alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
+alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                        # list instances in mcmakler-prime
+alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime' # access instance in zone europe-west3-a in mcmakler-prime
+alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime' # access instance in zone europe-west3-b in mcmakler-prime
+alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime' # access instance in zone europe-west3-c in mcmakler-prime
 
 # gpg encryption
 # verify signature for isos
