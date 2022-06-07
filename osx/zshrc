@@ -104,7 +104,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-z)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-z docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
