@@ -222,10 +222,6 @@ alias kt='kubectl top'                                     # shortcut for kubect
 alias kx='kubectl exec'                                    # shortcut for kubectl exec
 alias kap='kubectl apply -f'                               # shortcut for kubectl apply -f
 alias kcon='kubectl config current-context'                # get the current context
-alias kubedev='kubectl config use-context gke_flink-core-dev_europe-west3_k8s-main-dev'           # change kubernetes context to develop
-alias kubeprod='kubectl config use-context gke_flink-core-prod_europe-west3_k8s-main-prod'        # change kubernetes context to production
-alias kubestag='kubectl config use-context gke_flink-core-staging_europe-west3_k8s-main-staging'  # change kubernetes context to test
-alias kubeshare='kubectl config use-context gke_flink-core-shared_europe-west3_k8s-main-shared'   # change kubernetes context to test
 
 # git: automate git commands
 alias gg="git status"                                       # gg:          show the state of the working dir
