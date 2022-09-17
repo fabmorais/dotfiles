@@ -261,6 +261,11 @@ alias matrix='cmatrix -ab'			    # matrix
 
 # Kubernetes Config
 export KUBE_EDITOR=nvim
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# Docker config 
+export DOCKER_BUILDKIT=0
+export COMPOSE_DOCKER_CLI_BUILD=0
 
 # HSTR configuration - add this to ~/.bashrc
 export HSTR_CONFIG=hicolor       # get more colors
