@@ -194,6 +194,7 @@ alias va='source ./venv/bin/activate'                                           
 alias watch='watch '                                                                                  # enable watch to work with alias
 alias df='df -h'                                                                                      # human-readable sizes
 alias free='free -m'                                                                                  # show sizes in MB
+alias v='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 
 # gcloud:  speed list, ssh access to instance
 alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                        # list instances in mcmakler-prime
