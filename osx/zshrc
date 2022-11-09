@@ -195,6 +195,7 @@ alias watch='watch '                                                            
 alias df='df -h'                                                                                      # human-readable sizes
 alias free='free -m'                                                                                  # show sizes in MB
 alias s='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+alias tldr='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
 # gcloud:  speed list, ssh access to instance
 alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                        # list instances in mcmakler-prime
@@ -221,8 +222,6 @@ alias ks='kubectl scale'                                   # shortcut for kubect
 alias kl='kubectl logs'                                    # shortcut for kubectl logs
 alias kt='kubectl top'                                     # shortcut for kubectl top
 alias kx='kubectl exec'                                    # shortcut for kubectl exec
-alias kap='kubectl apply -f'                               # shortcut for kubectl apply -f
-alias kcon='kubectl config current-context'                # get the current context
 
 # git: automate git commands
 alias gg="git status"                                       # gg:          show the state of the working dir
@@ -230,13 +229,10 @@ alias gp="git pull"                                         # gp:          downl
 alias gd="git diff"                                         # gd:          show changes between commits, commit and working tree
 alias gl="git log"                                          # gl: 
 alias gco="git checkout"                                    # gco:
-alias gba="git branch"                                      # gba:
 alias ginit="git init"                                      # ginit:       create an empty git repository or reinitialize an existing one
 alias git-branches='git branch -va'                         # git-branches: show all the branches(individual projects withian a git repository)
-alias gco-dev='git checkout develop'                        # change to develop branch
-alias gco-stag='git checkout staging'                       # change to develop branch
-alias gco-master='git checkout master'                      # change to master branch
 alias gl-fancy='git log --oneline --decorate --all --graph' # git log fancy
+alias gb='git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff --color=always {1}" --pointer=">" | xargs git checkout' # git branch
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
