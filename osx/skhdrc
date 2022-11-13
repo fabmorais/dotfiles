@@ -1,0 +1,75 @@
+# open terminal, blazingly fast compared to iTerm/Hyper
+# cmd - return : /Applications/iTerm.app/Contents/MacOS/iTerm2 --single-instance -d ~
+
+# focus window - alt -> option/win
+alt - h : yabai -m window --focus west || \
+          yabai -m window --focus $(yabai -m query --windows --display west | \
+                                    jq 'map(select(.visible == 1)) | sort_by(.frame.x, .frame.y) | last | .id') || \
+          yabai -m display --focus west
+
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east || \
+          yabai -m window --focus $(yabai -m query --windows --display east | \
+                                    jq 'map(select(.visible == 1)) | sort_by(.frame.x, .frame.y) | first | .id') || \
+          yabai -m display --focus east
+
+# swap managed window
+ctrl + alt - h : yabai -m window --swap west
+ctrl + alt - j : yabai -m window --swap south
+ctrl + alt - k : yabai -m window --swap north
+ctrl + alt - l : yabai -m window --swap east
+
+# move managed window
+ctrl + alt - y : yabai -m window --warp west
+ctrl + alt - u : yabai -m window --warp south
+ctrl + alt - i : yabai -m window --warp north
+ctrl + alt - o : yabai -m window --warp east
+
+# switch spaces/desktop
+cmd - 1 : yabai -m window --display 1 yabai -m display --focus 1
+cmd - 2 : yabai -m window --display 2 yabai -m display --focus 2
+
+# rotate tree
+alt - r : yabai -m space --rotate 90
+
+# toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle padding and gap
+alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+# float / unfloat window and center on screen
+alt - t : yabai -m window --toggle float;\
+          yabai -m window --grid 7:5:1:1:3:5
+
+# toggle window split type
+# alt - l : yabai -m window --toggle split
+
+# balance size of windows
+shift + alt - 0 : yabai -m space --balance
+
+# move window and focus desktop
+shift + alt - 1 : yabai -m window --space 1; yabai -m space --focus 1
+shift + alt - 2 : yabai -m window --space 2; yabai -m space --focus 2
+shift + alt - 3 : yabai -m window --space 3; yabai -m space --focus 3
+shift + alt - 4 : yabai -m window --space 4; yabai -m space --focus 4
+shift + alt - 5 : yabai -m window --space 5; yabai -m space --focus 5
+shift + alt - 6 : yabai -m window --space 6; yabai -m space --focus 6
+shift + alt - 7 : yabai -m window --space 7; yabai -m space --focus 7
+shift + alt - 8 : yabai -m window --space 8; yabai -m space --focus 8
+shift + alt - 9 : yabai -m window --space 9; yabai -m space --focus 9
+
+# send window to monitor and follow focus
+ctrl + alt - p : /Users/fabio/Developer/CustomScripts/SwitchSpaces/moveWindowLeftAndFollowFocus.sh
+ctrl + alt - n : /Users/fabio/Developer/CustomScripts/SwitchSpaces/moveWindowRightAndFollowFocus.sh
+
+# resize window
+ctrl + alt - a : yabai -m window --resize left:-50:0; \
+    yabai -m window --resize right:-50:0
+ctrl + alt - s : yabai -m window --resize bottom:0:50; \
+    yabai -m window --resize top:0:50
+ctrl + alt - w : yabai -m window --resize top:0:-50; \
+    yabai -m window --resize bottom:0:-50
+ctrl + alt - d : yabai -m window --resize right:50:0; \
+    yabai -m window --resize left:50:0
