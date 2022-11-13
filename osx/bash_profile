@@ -1,4 +1,4 @@
-    #  ---------------------------------------------------------------------------
+#  DEPRECATED ---------------------------------------------------------------------------
 #
 #
 #  Sections:
@@ -45,7 +45,7 @@ NC='\[\e[0m\]'
 # powerline-daemon -q
 # POWERLINE_BASH_CONTINUATION=1
 # POWERLINE_BASH_SELECT=1
-# . /Users/fabio.morais/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
+# . $HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/bash/powerline.sh
 
 # Java Environment
 eval "$(jenv init -)"
@@ -64,7 +64,7 @@ export GOROOT=/usr/local/go
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Flutter development
-export PATH=/Users/fabio.morais/mobile-dev/flutter/bin:$PATH
+export PATH=$HOME/mobile-dev/flutter/bin:$PATH
 
 # Maven development
 export M2_HOME="/usr/local/bin/apache-maven-3.6.3"
@@ -116,7 +116,7 @@ fi
 # tabtab source for slss package
 # uninstall by removing these lines or running `tabtab uninstall slss`
 [ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.bash ] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.bash
-complete -C /Users/fabio.morais/terraform/terraform terraform
+complete -C $HOME/terraform/terraform terraform
 complete -C /usr/local/bin/terraform terraform
 
 #   aws auto complete 
@@ -130,10 +130,10 @@ complete -C '/usr/local/aws/bin/aws_completer' aws
     export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/fabio.morais/google-cloud-sdk/path.bash.inc' ]; then . '/Users/fabio.morais/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '$HOME/google-cloud-sdk/path.bash.inc' ]; then . '$HOME/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/fabio.morais/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/fabio.morais/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '$HOME/google-cloud-sdk/completion.bash.inc' ]; then . '$HOME/google-cloud-sdk/completion.bash.inc'; fi
 
 
 #   Set Default Editor (change 'Nano' to the editor of your choice)
@@ -210,7 +210,7 @@ alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias update-bash='cp ~/repo/bashProfile/.bash_profile ~/.bash_profile && source ~/.bash_profile'               # update-bash: copy my git .bash to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                          # update-os: update mac
 
-alias vpn='sudo openvpn --config /Users/fabio.morais/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN
+alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'                        # VPN: connect to OpenVPN
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
 
