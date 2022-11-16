@@ -47,7 +47,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -187,7 +187,6 @@ alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to fil
 alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
 alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'                     # VPN: connect to OpenVPN
 alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
-alias update-zsh='cp ~/Projects/dotfiles/osx/zshrc ~/.zshrc && source ~/.zshrc'                       # update-zsh: copy my git .zshrc to local and source
 alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
 alias ve='python3 -m venv ./venv'                                                                     # enable virtual env 
 alias va='source ./venv/bin/activate'                                                                 # activate virtual env
@@ -303,3 +302,5 @@ rbrew_doctor() {
 # $(brew --prefix)/opt/fzf/install
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+eval "$(starship init zsh)"

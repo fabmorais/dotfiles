@@ -1,0 +1,132 @@
+format = """
+$username@$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_status\
+$git_state\
+$git_metrics\
+$c\
+$python\
+$rust\
+$golang\
+$docker_context\
+$nodejs\
+$lua\
+$java\
+$haskell\
+$fill\
+$kubernetes\
+$cmd_duration\
+$line_break\
+$character\
+"""
+
+[fill]
+symbol = " "
+
+[username]
+show_always = true
+format = '\[[fab]($style)'
+style_user = "#BD93F9"
+
+[hostname]
+ssh_only = false
+format = '[$ssh_symbol](bold blue)[$hostname](#BD93F9): '
+disabled = false
+
+[directory]
+format = '[$path]($style)\]'
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+style = "bold #50fa7b"
+
+# # Here is how you can shorten some long paths by text replacement
+[directory.substitutions]
+"Documents" = " "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = "  "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important  " = "  "
+
+[character]
+success_symbol = "[❯](bold #50fa7b)"
+error_symbol = "[❯](bold #ff5555)"
+
+[cmd_duration]
+disabled = false
+format = '[⏱ $duration ]($style)'
+style = "bold #f1fa8c"
+
+# git section
+[git_branch]
+symbol = ""
+format = "[ $symbol $branch]($style) "
+style = "bold #ff79c6"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold #ff5555"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[git_metrics]
+disabled = false
+
+
+# virtualization section
+[kubernetes]
+format = '[ ⎈ $context/$namespace](dimmed green)'
+disabled = false
+detect_files = ['k8s']
+detect_folders = ['kube','k8s','helm','kustomize']
+detect_extensions = ['j2','yaml','yml']
+
+[docker_context]
+symbol = " "
+format = '[$symbol $context ]($style) $path'
+
+# languages section
+[c]
+symbol = " "
+format = '[ $symbol ($version)]($style)'
+
+[python]
+symbol = " "
+# symbol = "🐍 "
+format = '[ $symbol($version)]($style)'
+
+[rust]
+symbol = " "
+format = '[$symbol($version)]($style)'
+
+[golang]
+symbol = " "
+format = '[$symbol($version)]($style)'
+
+[lua]
+# symbol = " "
+format = '[$symbol($version)]($style)'
+
+[haskell]
+symbol = " "
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+format = '[$symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+format = '[$symbol ($version) ]($style)'
