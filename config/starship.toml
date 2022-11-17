@@ -32,7 +32,7 @@ style_user = "bold #BD93F9"
 
 [hostname]
 ssh_only = false
-format = '[$ssh_symbol](bold blue)[$hostname](bold #BD93F9): '
+format = '[$ssh_symbol](bold blue)[$hostname](bold #BD93F9) '
 disabled = false
 
 [directory]
@@ -60,7 +60,7 @@ error_symbol = "[❯](bold #ff5555)"
 
 [cmd_duration]
 disabled = false
-format = '[⏱ $duration ]($style)'
+format = '[ ⏱ $duration ]($style)'
 style = "bold #f1fa8c"
 
 # git section

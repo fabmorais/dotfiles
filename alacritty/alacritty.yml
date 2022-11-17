@@ -680,11 +680,22 @@ alt_send_esc: false
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
+
 key_bindings:
+  # This keybinding fix tabs navigation in barbar and nvim
   - { key: Period, mods: Alt, chars: "\x1b." } # Alt + .
   - { key: Comma, mods: Alt, chars: "\x1b," } # Alt + ,
+  - { key: Key1, mods: Alt, chars: "\x1b1" } # Alt + 1
+  - { key: Key2, mods: Alt, chars: "\x1b2" } # Alt + 2
+  - { key: Key3, mods: Alt, chars: "\x1b3" } # Alt + 3
+  - { key: Key4, mods: Alt, chars: "\x1b4" } # Alt + 4
+  - { key: Key5, mods: Alt, chars: "\x1b5" } # Alt + 5
+  - { key: Key6, mods: Alt, chars: "\x1b6" } # Alt + 6
+  - { key: Key7, mods: Alt, chars: "\x1b7" } # Alt + 7
+  - { key: Key8, mods: Alt, chars: "\x1b8" } # Alt + 8
+  - { key: Key9, mods: Alt, chars: "\x1b9" } # Alt + 9
 
-  # # (macOS only)
+  #  (macOS only)
   - { key: Key0, mods: Command, action: ResetFontSize }
   - { key: Equals, mods: Command, action: IncreaseFontSize }
   - { key: K, mods: Command, action: ClearHistory }
