@@ -100,7 +100,7 @@ format = '[$symbol $context ]($style) $path'
 # languages section
 [c]
 symbol = " "
-format = '[ $symbol ($version)]($style)'
+format = '[ $symbol($version)]($style)'
 
 [python]
 symbol = " "
@@ -124,8 +124,8 @@ symbol = " "
 format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
-symbol = ""
-format = '[$symbol ($version) ]($style)'
+symbol = " "
+format = '[ $symbol ($version) ]($style)'
 
 [java]
 symbol = " "
