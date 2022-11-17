@@ -191,10 +191,10 @@ alias s='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvi
 alias tldr='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
 # gcloud:  speed list, ssh access to instance
-alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                        # list instances in mcmakler-prime
-alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime' # access instance in zone europe-west3-a in mcmakler-prime
-alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime' # access instance in zone europe-west3-b in mcmakler-prime
-alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime' # access instance in zone europe-west3-c in mcmakler-prime
+alias gcvmlist='gcloud compute instances list'                        # list instances
+alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a' # access instance in zone europe-west3-a
+alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b' # access instance in zone europe-west3-b
+alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c' # access instance in zone europe-west3-c
 
 # gpg encryption
 # verify signature for isos

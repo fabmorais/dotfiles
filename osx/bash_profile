@@ -214,21 +214,6 @@ alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'      
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'                                                                
 
-#  gcloud:  speed list, ssh access to instance
-alias gcvmlist='gcloud compute instances list --project=mcmakler-prime'                         # list instances in mcmakler-prime
-alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a --project=mcmakler-prime'  # access instance in zone europe-west3-a in mcmakler-prime
-alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b --project=mcmakler-prime'  # access instance in zone europe-west3-b in mcmakler-prime
-alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c --project=mcmakler-prime'  # access instance in zone europe-west3-c in mcmakler-prime
-
-#  kubectl:  automate kube control commands
-alias k='kubectl $@'                                        # shortcut for kubectl
-alias kg='kubectl get'                                      # shortcut for kubectl get
-alias kcon='kubectl config current-context'                 # get the current context
-alias kubedev='kubectl config use-context gke-develop'      # change kubernetes context to develop
-alias kubeprod='kubectl config use-context gke-production'  # change kubernetes context to production
-alias kubestag='kubectl config use-context gke-staging'     # change kubernetes context to staging
-alias kubetest='kubectl config use-context gke-testing'     # change kubernetes context to test
-
 #   git:  automate git commands
 alias gg="git status"                        # gg:          show the state of the working dir
 alias gp="git pull"                          # gp:          download and integrate remote changes
@@ -241,14 +226,6 @@ alias git-branches='git branch -va'          # git-branches: show all the branch
 alias git-chdevelop='git checkout develop'   # change to develop branch
 alias git-chmaster='git checkout master'     # change to master branch
 alias gl-fancy='git log --oneline --decorate --all --graph'         # git log fancy
-
-#   mcmakler:  git repository
-alias infrastructure="cd ~/repo/infrastructure"
-alias mcmakler-config="cd ~/repo/mcmakler-config"
-alias znogit="cd ~/repo/znogit"
-alias haproxy="cd ~/repo/haproxy-gateway"
-alias docker-images="cd ~/repo/docker-images"
-alias repobackup="cd ~/repo/backup"
 
 #   HSTR: history
 alias hh=hstr                    # hh to Wbe alias for hstr

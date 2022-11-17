@@ -28,11 +28,11 @@ symbol = " "
 [username]
 show_always = true
 format = '\[[fab]($style)'
-style_user = "#BD93F9"
+style_user = "bold #BD93F9"
 
 [hostname]
 ssh_only = false
-format = '[$ssh_symbol](bold blue)[$hostname](#BD93F9): '
+format = '[$ssh_symbol](bold blue)[$hostname](bold #BD93F9): '
 disabled = false
 
 [directory]
