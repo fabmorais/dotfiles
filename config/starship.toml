@@ -30,6 +30,7 @@ show_always = true
 format = '\[[fab]($style)'
 style_user = "bold #BD93F9"
 
+
 [hostname]
 ssh_only = false
 format = '[$ssh_symbol](bold blue)[$hostname](bold #BD93F9) '
@@ -37,7 +38,7 @@ disabled = false
 
 [directory]
 format = '[$path]($style)\]'
-truncation_length = 3
+truncation_length = 2
 truncation_symbol = "…/"
 read_only = " "
 style = "bold #50fa7b"
@@ -45,7 +46,7 @@ style = "bold #50fa7b"
 # # Here is how you can shorten some long paths by text replacement
 [directory.substitutions]
 "Documents" = " "
-"Downloads" = " "
+"Downloads" = ""
 "Music" = " "
 "Pictures" = " "
 # Keep in mind that the order matters. For example:
@@ -67,7 +68,7 @@ style = "bold #f1fa8c"
 [git_branch]
 symbol = ""
 format = "[ $symbol $branch]($style) "
-style = "bold #ff79c6"
+style = "bold #BD93F9"
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'

@@ -1,9 +1,11 @@
 neofetch
 
-#.zshrc
+export ZSH="$HOME/.oh-my-zsh"
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-z docker)
+source $ZSH/oh-my-zsh.sh
+
 export PATH="/usr/local/sbin:$PATH"
-# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
 # # This loads nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -12,243 +14,121 @@ export NVM_DIR="$HOME/.nvm"
 # remove zsh correct
 CORRECT_IGNORE_FILE='.*'
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # GNU Tools
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 # Tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
-#tf shell tab
-# terraform -install-autocomplete
 
-# Cargo 
-export PATH=$PATH:$HOME/.cargo/bin
+# Rust/Cargo
+export PATH="$PATH:$HOME/.cargo/bin:$PATH"
 
 # Go development
 export GOPATH="${HOME}/.go"
-#export GOROOT=/usr/local/go
-#export GOROOT=/usr/local/opt/go/libexec
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
+# enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-peco-history zsh-z docker docker-compose)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 # gcloud
 source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
 source '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-
-# Changing "ls" to "exa"
+# aliases
+alias l.='exa -a | egrep "^\."'
 alias ls='exa -al --icons --color=always --group-directories-first' # my preferred listing
 alias la='exa -a --icons --color=always --group-directories-first'  # all files and dirs
 alias ll='exa -l --icons --color=always --group-directories-first'  # long format
 alias lt='exa -aT --icons --color=always --group-directories-first' # tree listing
-alias l.='exa -a | egrep "^\."'
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias cp='cp -iv'                            # Preferred 'cp' implementation
-alias pc='ccat --bg=dark'                    # pc:          print terminal display with color
-alias mv='mv -iv'                            # Preferred 'mv' implementation
-alias mkdir='mkdir -pv'                      # Preferred 'mkdir' implementation
-alias less='less -FSRXc'                     # Preferred 'less' implementation
-cd() { builtin cd "$@"; ll; }                # Always list directory contents upon 'cd'
-alias .3='cd ../../../'                      # Go back 3 directory levels
-alias .4='cd ../../../../'                   # Go back 4 directory levels
-alias .5='cd ../../../../../'                # Go back 5 directory levels
-alias .6='cd ../../../../../../'             # Go back 6 directory levels
-alias edit='subl'                            # edit:         Opens any file in sublime editor
-alias f='open -a Finder ./'                  # f:            Opens current directory in MacOS Finder
-alias ~="cd ~"                               # ~:            Go Home
-alias c='clear'                              # c:            Clear terminal display
-alias q='exit'                               # q:            Exit terminal display
-alias h='history'                            # h:            history terminal display
-alias hs='history | grep'                    # hs:           history |grep terminal display
-# alias which='type -all'                    # which:        Find executables
-alias path='echo -e ${PATH//:/\\n}'          # path:         Echo all executable Paths
-alias show_options='shopt'                   # Show_options: display bash options settings
-alias fix_stty='stty sane'                   # fix_stty:     Restore terminal settings when screwed up
-alias cic='set completion-ignore-case On'    # cic:          Make tab-completion case-insensitive
-alias untar='tar -zxvf'                      # untar:        untar with the right arguments
-alias wget='wget -c'                         # wget:         download something but be able to resume if something goes wrong
-alias getpass='openssl rand -base64 20'      # getpass:      generate a random 20-character password
-alias svim='sudo nvim'                       # sudo vim:     sudo vim something
-alias v='nvim'                               # neovim:       neovim 
-alias python='python3.11'                    # python:       Make python3 default to python
-alias grep='grep --color=auto'               # grep:         Colorize the grep command output
-alias egrep='egrep --color=auto'             # egrep:        Colorize the egrep command output
-alias fgrep='fgrep --color=auto'             # fgrep:        Colorize the fgrep command output
-alias header='curl -I'                       # header:       get web server headers
-alias vs='code'                              # code:         open visual studio code
-mcd () { mkdir -p "$1" && cd "$1"; }         # mcd:          Makes new Dir and jumps inside
-trash () { command mv "$@" ~/.Trash ; }      # trash:        Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }     # ql:           Opens any file in MacOS Quicklook Preview
-alias DT='tee ~/Desktop/terminalOut.txt'     # DT:           Pipe content to file on MacOS Desktop
-alias nvpn='sudo killall openvpn'            # VPN:          Kill openVPN connection
-alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'                     # VPN: connect to OpenVPN
-alias afk='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend' # AFK computer
-alias update-os="sudo softwareupdate -i -a; brew update; brew upgrade"                                # update-os: update mac
-alias ve='python3 -m venv ./venv'                                                                     # enable virtual env 
-alias va='source ./venv/bin/activate'                                                                 # activate virtual env
-alias watch='watch '                                                                                  # enable watch to work with alias
-alias df='df -h'                                                                                      # human-readable sizes
-alias free='free -m'                                                                                  # show sizes in MB
+cd() { builtin cd "$@"; ll; }            # always list directory contents upon 'cd'
+..() { builtin cd .. "$@"; ll; }         # always list directory contents upo '..'
+mcd () { mkdir -p "$1" && cd "$1"; }     # makes new dir and jumps inside
+alias DT='tee ~/Desktop/terminalOut.txt' # pipe content to file on MacOS Desktop
+alias less='less -FSRXc'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+alias .6='cd ../../../../../../'
+alias f='open -a Finder ./'
+alias c='clear'
+alias q='exit'
+alias h='history'
+alias hs='history | grep'
+alias path='echo -e ${PATH//:/\\n}'
+alias untar='tar -zxvf'
+alias wget='wget -c'
+alias getpass='openssl rand -base64 20'
+alias v='nvim'
+alias python='python3.11'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias header='curl -I'
+alias nvpn='sudo killall openvpn'
+alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'
+alias update-os='sudo softwareupdate -i -a; brew update; brew upgrade'
+alias ve='python3 -m venv ./venv'
+alias va='source ./venv/bin/activate'
+alias watch='watch '
+alias df='df -h'
+alias free='free -m'
+alias weather="curl -4 wttr.in/berlin"
 alias s='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 alias tldr='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
-# gcloud:  speed list, ssh access to instance
-alias gcvmlist='gcloud compute instances list'                        # list instances
-alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a' # access instance in zone europe-west3-a
-alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b' # access instance in zone europe-west3-b
-alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c' # access instance in zone europe-west3-c
+# gcloud
+alias gcvmlist='gcloud compute instances list'
+alias gcssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
+alias gcsshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
+alias gcsshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
 
 # gpg encryption
-# verify signature for isos
-alias gpg-check="gpg2 --keyserver-options auto-key-retrieve --verify"
-# receive the key of a developer
-alias gpg-retrieve="gpg2 --keyserver-options auto-key-retrieve --receive-keys"
-
+alias gpg-check='gpg2 --keyserver-options auto-key-retrieve --verify'          # verify signature for isos
+alias gpg-retrieve='gpg2 --keyserver-options auto-key-retrieve --receive-keys' # receive the key of a developer
+ 
 # broot
 alias br='broot -dhp'
 alias bs='broot --sizes'
 
 # kubectl:  automate kube control commands
-alias k='kubectl'                                          # change kubernetes context to develop
-alias kg='kubectl get'                                     # shortcut for kubectl get
-alias ke='kubectl edit'                                    # shortcut for kubectl edit
-alias kd='kubectl describe'                                # shortcut for kubectl describe
-alias ks='kubectl scale'                                   # shortcut for kubectl scale
-alias kl='kubectl logs'                                    # shortcut for kubectl logs
-alias kt='kubectl top'                                     # shortcut for kubectl top
-alias kx='kubectl exec'                                    # shortcut for kubectl exec
+alias k='kubectl'
+alias kg='kubectl get'
+alias ke='kubectl edit'
+alias kd='kubectl describe'
+alias ks='kubectl scale'
+alias kl='kubectl logs'
+alias kt='kubectl top'
+alias kx='kubectl exec'
 
 # git: automate git commands
-alias gg="git status"                                       # gg:          show the state of the working dir
-alias gp="git pull"                                         # gp:          download and integrate remote changes
-alias gd="git diff"                                         # gd:          show changes between commits, commit and working tree
-alias gl="git log"                                          # gl: 
-alias gco="git checkout"                                    # gco:
-alias ginit="git init"                                      # ginit:       create an empty git repository or reinitialize an existing one
-alias git-branches='git branch -va'                         # git-branches: show all the branches(individual projects withian a git repository)
-alias gl-fancy='git log --oneline --decorate --all --graph' # git log fancy
+alias gg='git status'
+alias gp='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+alias gl='git log'
+alias gla='git log --oneline --decorate --all --graph'
 alias gb='git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff --color=always {1}" --pointer=">" | xargs git checkout' # git branch
+alias gbva='git branch -va'
 
-#   ---------------------------
-#          NETWORKING
-#   ---------------------------
-
-alias ipe='curl ipinfo.io/ip'                       # ipe:          External IP Address
-alias ipi='ipconfig getifaddr en0'                  # ipi:          Internal IP Address
-alias netCons='lsof -i'                             # netCons:      Show all open TCP/IP sockets
-alias ping='ping -c 5'                              # ping:         ping 5 times only
-alias flushDNS='dscacheutil -flushcache'            # flushDNS:     Flush out the DNS Cache
-alias lsock='sudo /usr/sbin/lsof -i -P'             # lsock:        Display open sockets
-alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'   # lsockU:       Display only open UDP sockets
-alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'   # lsockT:       Display only open TCP sockets
-alias ipInfo0='ipconfig getpacket en0'              # ipInfo0:      Get info on connections for en0
-alias ipInfo1='ipconfig getpacket en1'              # ipInfo1:      Get info on connections for en1
-alias openPorts='sudo lsof -i | grep LISTEN'        # openPorts:    All listening connections
-alias showBlocked='sudo ipfw list'                  # showBlocked:  All ipfw rules inc/ blocked IPs
-alias speed='speedtest-cli --server 2406 --simple'  # speed:  check my network speed
-alias matrix='cmatrix -ab'			    # matrix
-
-# Kubernetes Config
-export KUBE_EDITOR=nvim
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+# networking
+alias ipe='curl ipinfo.io/ip'                      # external IP Address
+alias ipi='ipconfig getifaddr en0'                 # internal IP Address
+alias netCons='lsof -i'                            # show all open TCP/IP sockets
+alias ping='ping -c 5'                             # ping 5 times only
+alias flushDNS='dscacheutil -flushcache'           # flush out the DNS Cache
+alias lsock='sudo /usr/sbin/lsof -i -P'            # display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'  # display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'  # display only open TCP sockets
+alias ipInfo0='ipconfig getpacket en0'             # get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'             # get info on connections for en1
+alias openPorts='sudo lsof -i | grep LISTEN'       # all listening connections
+alias showBlocked='sudo ipfw list'                 # all ipfw rules inc/ blocked IPs
 
 # Docker config 
 export DOCKER_BUILDKIT=0
@@ -268,6 +148,10 @@ export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
 # if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 export PATH=$(brew --prefix openvpn)/sbin:$PATH
 
+# Kubernetes Config
+export KUBE_EDITOR=nvim
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
 # kubectl
 source <(kubectl completion zsh)
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
@@ -276,21 +160,14 @@ complete -F __start_kubectl k
 # kubectl new plugin gcp
 USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
-### Nerd section ###
-excuse() { echo $(telnet bofh.jeffballard.us 666 2>/dev/null) | grep --color -o "Your excuse is:.*$" ; }
-starwars() { telnet towel.blinkenlights.nl ; }
-weather() { curl wttr.in/$1 ; }
-
 ### Tools ###
 rbrew_upgrade() {
   brew update && brew upgrade
 }
+
 rbrew_doctor() {
   brew update && brew upgrade && brew cleanup; brew doctor
 }
-
-# To install useful key bindings and fuzzy completion:
-# $(brew --prefix)/opt/fzf/install
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
