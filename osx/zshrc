@@ -15,14 +15,16 @@ export NVM_DIR="$HOME/.nvm"
 CORRECT_IGNORE_FILE='.*'
 
 # GNU Tools
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
 
 # Tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
 
 # Rust/Cargo
 export PATH="$PATH:$HOME/.cargo/bin:$PATH"
+# Rust/C/Cpp Debugger
+export PATH="$PATH:$(brew --prefix)/opt/llvm/bin:$PATH"
 
 # Go development
 export GOPATH="${HOME}/.go"
