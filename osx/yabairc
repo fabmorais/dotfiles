@@ -49,6 +49,8 @@ yabai -m config \
 yabai -m rule --add app="^Spotify$" manage=on
 # apps to be in desktop 4
 yabai -m rule --add app="Spotify" space=4
+# yabai -m rule --add app="Brave" space=3
+yabai -m rule --add app="Joplin" space=3
 
 # apps to be ignored
 yabai -m rule --add app="^(System Settings|System Information)$" manage=off

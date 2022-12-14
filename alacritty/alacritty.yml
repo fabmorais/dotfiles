@@ -712,7 +712,10 @@ key_bindings:
   - { key: Right, mods: Command, chars: "\x05" }
   - { key: Left, mods: Shift, chars: "\x1b[1;2D" }
   - { key: Left, mods: Control, chars: "\x1b[1;5D" }
-  - { key: Left, mods: Alt, chars: "\x1b[1;3D" }
+  # - { key: Left, mods: Alt, chars: "\x1b[1;3D" }
+  - { key: Right, mods: Alt, chars: "\x1BF" }
+  - { key: Left, mods: Alt, chars: "\x1BB" }
+
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
@@ -773,17 +776,17 @@ key_bindings:
   #- { key: N,      mods: Shift,         mode: Vi|~Search, action: SearchPrevious          }
 
   # Search Mode
-  #- { key: Return,                mode: Search|Vi,  action: SearchConfirm         }
-  #- { key: Escape,                mode: Search,     action: SearchCancel          }
-  #- { key: C,      mods: Control, mode: Search,     action: SearchCancel          }
-  #- { key: U,      mods: Control, mode: Search,     action: SearchClear           }
-  #- { key: W,      mods: Control, mode: Search,     action: SearchDeleteWord      }
-  #- { key: P,      mods: Control, mode: Search,     action: SearchHistoryPrevious }
-  #- { key: N,      mods: Control, mode: Search,     action: SearchHistoryNext     }
-  #- { key: Up,                    mode: Search,     action: SearchHistoryPrevious }
-  #- { key: Down,                  mode: Search,     action: SearchHistoryNext     }
-  #- { key: Return,                mode: Search|~Vi, action: SearchFocusNext       }
-  #- { key: Return, mods: Shift,   mode: Search|~Vi, action: SearchFocusPrevious   }
+  # - { key: Return, mode: Search|Vi, action: SearchConfirm }
+  # - { key: Escape, mode: Search, action: SearchCancel }
+  # - { key: C, mods: Control, mode: Search, action: SearchCancel }
+  # - { key: U, mods: Control, mode: Search, action: SearchClear }
+  # - { key: W, mods: Control, mode: Search, action: SearchDeleteWord }
+  # - { key: P, mods: Control, mode: Search, action: SearchHistoryPrevious }
+  # - { key: N, mods: Control, mode: Search, action: SearchHistoryNext }
+  # - { key: Up, mode: Search, action: SearchHistoryPrevious }
+  # - { key: Down, mode: Search, action: SearchHistoryNext }
+  # - { key: Return, mode: Search|~Vi, action: SearchFocusNext }
+  # - { key: Return, mods: Shift, mode: Search|~Vi, action: SearchFocusPrevious }
 
   # (Windows, Linux, and BSD only)
   #- { key: V,              mods: Control|Shift, mode: ~Vi,        action: Paste            }
