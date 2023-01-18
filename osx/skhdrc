@@ -1,5 +1,13 @@
 # open terminal, blazingly fast compared to iTerm/Hyper
-# cmd - return : /Applications/iTerm.app/Contents/MacOS/iTerm2 --single-instance -d ~
+
+# application shortcuts
+ctrl + shift - t : open -a /Applications/Alacritty.app
+ctrl + shift - b : open -a /Applications/Brave\ Browser.app/
+ctrl + shift - s : open -a /Applications/Slack.app
+ctrl + shift - m : open -a /Applications/Spotify.app
+ctrl + shift - j : open -a /Applications/Joplin.app
+ctrl + shift - 1 : open -a /Applications/1Password.app
+ctrl + shift - 2 : open -a /Applications/Authy\ Desktop.app
 
 # focus window - alt -> option/win
 alt - h : yabai -m window --focus west || \
@@ -43,6 +51,11 @@ alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 alt - t : yabai -m window --toggle float;\
           yabai -m window --grid 7:5:1:1:3:5
 
+# scratchpad
+# alt - v : /Applications/Alacritty.app/Contents/MacOS/alacritty -e '/bin/zsh'; \
+#           sleep 0.1 && yabai -m window --toggle float;\
+#           yabai -m window --grid 4:4:1:1:2:2
+
 # toggle window split type
 # alt - l : yabai -m window --toggle split
 
@@ -61,8 +74,8 @@ shift + alt - 8 : yabai -m window --space 8; yabai -m space --focus 8
 shift + alt - 9 : yabai -m window --space 9; yabai -m space --focus 9
 
 # send window to monitor and follow focus
-ctrl + alt - p : $HOME/Projects/dotfiles/scripts/moveWindowLeftAndFollowFocus.sh
-ctrl + alt - n : $HOME/Projects/dotfiles/scripts/moveWindowRightAndFollowFocus.sh
+ctrl + alt - p : $HOME/Developer/dotfiles/scripts/moveWindowLeftAndFollowFocus.sh
+ctrl + alt - n : $HOME/Developer/dotfiles/scripts/moveWindowRightAndFollowFocus.sh
 
 # resize window
 ctrl + alt - a : yabai -m window --resize left:-50:0; \
