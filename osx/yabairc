@@ -63,6 +63,6 @@ yabai -m rule --add app="^Calendar$" manage=off
 yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add title="^App Store$" manage=off
 yabai -m rule --add title="^1Password$" manage=off
-yabai -m rule --add title="^(About This Mac|Library)$" manage=off
+yabai -m rule --add title="^(About This Mac|Library|Twilio Authy)$" manage=off
 
 echo "yabai configuration loaded.."
