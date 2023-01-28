@@ -350,7 +350,6 @@ cursor:
 #
 # Default:
 #   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
-#   - (Windows) powershell
 shell:
   program: /opt/homebrew/bin/tmux
   args:
@@ -359,13 +358,13 @@ shell:
     - -D
     - -s
     - main
+
+#   - (Windows) defaults to powershell, but below will defaults to Arch linux with WSL2
 # shell:
-#   program: $SHELL
+#   program: C:\WINDOWS\system32\wsl.exe -d Arch
 #   args:
-#     - -l
-#     - -c
-#     - "tmux attach || tmux"
-# - tmux attach -t ${tmux_session:-main} || tmux new -s ${tmux_session:-main}
+#     - --cd ~
+
 # Startup directory
 #
 # Directory the shell is started in. If this is unset, or `None`, the working
