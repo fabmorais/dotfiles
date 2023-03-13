@@ -88,7 +88,7 @@ alias free='free -m'
 alias weather="curl -4 wttr.in/berlin"
 alias afk="pmset displaysleepnow"
 alias s='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
-alias tldr='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
+alias tldrl='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
 # gcloud
 alias vmlist='gcloud compute instances list'
