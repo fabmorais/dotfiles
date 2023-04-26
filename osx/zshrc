@@ -87,7 +87,7 @@ alias df='df -h'
 alias free='free -m'
 alias weather="curl -4 wttr.in/berlin"
 alias afk="pmset displaysleepnow"
-alias s='fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+alias s='fd --type f --type l --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
 alias tldrl='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
 # gcloud
@@ -180,39 +180,40 @@ rbrew_doctor() {
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 # https://github.com/jimeh/zsh-peco-history/blob/master/zsh-peco-history.zsh
-if (( $+commands[peco] )); then
-  if ! (( ${+ZSH_PECO_HISTORY_OPTS} )); then
-    ZSH_PECO_HISTORY_OPTS="--layout=bottom-up"
-  fi
+# if (( $+commands[peco] )); then
+#   if ! (( ${+ZSH_PECO_HISTORY_OPTS} )); then
+#     ZSH_PECO_HISTORY_OPTS="--layout=bottom-up"
+#   fi
 
-  function peco_select_history() {
-    local parse_cmd
+#   function peco_select_history() {
+#     local parse_cmd
 
-    if (( $+commands[gtac] )); then
-      parse_cmd="gtac"
-    elif (( $+commands[tac] )); then
-      parse_cmd="tac"
-    else
-      parse_cmd="tail -r" fi
-    if [ -n "$ZSH_PECO_HISTORY_DEDUP" ]; then
-      if (( $+commands[perl] )); then
-        parse_cmd="$parse_cmd | perl -ne 'print unless \$seen{\$_}++'"
-      elif (( $+commands[awk] )); then
-        parse_cmd="$parse_cmd | awk '!seen[\$0]++'"
-      else
-        parse_cmd="$parse_cmd | uniq"
-      fi
-    fi
+#     if (( $+commands[gtac] )); then
+#       parse_cmd="gtac"
+#     elif (( $+commands[tac] )); then
+#       parse_cmd="tac"
+#     else
+#       parse_cmd="tail -r" fi
+#     if [ -n "$ZSH_PECO_HISTORY_DEDUP" ]; then
+#       if (( $+commands[perl] )); then
+#         parse_cmd="$parse_cmd | perl -ne 'print unless \$seen{\$_}++'"
+#       elif (( $+commands[awk] )); then
+#         parse_cmd="$parse_cmd | awk '!seen[\$0]++'"
+#       else
+#         parse_cmd="$parse_cmd | uniq"
+#       fi
+#     fi
 
-    BUFFER=$(fc -l -n 1 | eval $parse_cmd | \
-               peco ${=ZSH_PECO_HISTORY_OPTS} --query "$LBUFFER")
+#     BUFFER=$(fc -l -n 1 | eval $parse_cmd | \
+#                peco ${=ZSH_PECO_HISTORY_OPTS} --query "$LBUFFER")
 
-    CURSOR=$#BUFFER # move cursor
-    zle -R -c       # refresh
-  }
+#     CURSOR=$#BUFFER # move cursor
+#     zle -R -c       # refresh
+#   }
 
-  zle -N peco_select_history
-  bindkey '^R' peco_select_history
-fi
+#   zle -N peco_select_history
+#   bindkey '^R' peco_select_history
+# fi
 
 eval "$(starship init zsh)"
+eval "$(atuin init zsh --disable-up-arrow)"
