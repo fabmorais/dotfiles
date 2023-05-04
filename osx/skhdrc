@@ -1,14 +1,13 @@
 # open terminal, blazingly fast compared to iTerm/Hyper
 
 # application shortcuts
-ctrl + shift - t : open -a /Applications/Alacritty.app
+cmd - return : open -a /Applications/Alacritty.app
 ctrl + shift - b : open -a /Applications/Brave\ Browser.app/
 ctrl + shift - s : open -a /Applications/Slack.app
 ctrl + shift - m : open -a /Applications/Spotify.app
 ctrl + shift - j : open -a /Applications/Joplin.app
 ctrl + shift - f : open -a /Applications/Firefox.app
 ctrl + shift - 1 : open -a /Applications/1Password.app
-ctrl + shift - 2 : open -a /Applications/Authy\ Desktop.app
 
 # focus window - alt -> option/win
 alt - h : yabai -m window --focus west || \
