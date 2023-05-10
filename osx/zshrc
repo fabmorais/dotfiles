@@ -112,7 +112,7 @@ rbrew_doctor() {
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-source $HOME/Projects/dotfiles/aliases
+source $HOME/Developer/dotfiles/aliases
 
 eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
