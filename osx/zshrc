@@ -1,4 +1,5 @@
 neofetch
+
 # bindkey -e
 bindkey -v
 
@@ -42,53 +43,27 @@ ENABLE_CORRECTION="true"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
-# aliases
-alias l.='exa -a | egrep "^\."'
-alias ls='exa -l --icons --color=always --group-directories-first'
-alias ll='exa -al --icons --color=always --group-directories-first'
-alias la='exa -a --icons --color=always --group-directories-first'
-alias lt='exa -aT --icons --color=always --group-directories-first'
-
-cd() { builtin cd "$@"; ll; }            # always list directory contents upon 'cd'
-..() { builtin cd .. "$@"; ll; }         # always list directory contents upo '..'
-mcd () { mkdir -p "$1" && cd "$1"; }     # makes new dir and jumps inside
-alias DT='tee ~/Desktop/terminalOut.txt' # pipe content to file on MacOS Desktop
-alias less='less -FSRXc'
-alias cp='cp -iv'
-alias mv='mv -iv'
-alias mkdir='mkdir -pv'
-alias .2='cd ../../'
-alias .3='cd ../../../'
-alias .4='cd ../../../../'
-alias .5='cd ../../../../../'
-alias .6='cd ../../../../../../'
-alias f='open -a Finder ./'
-alias c='clear'
-alias q='exit'
-alias h='history'
-alias hs='history | grep'
-alias path='echo -e ${PATH//:/\\n}'
-alias untar='tar -zxvf'
-alias wget='wget -c'
-alias getpass='openssl rand -base64 20'
-alias v='nvim'
-alias python='python3.11'
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias header='curl -I'
+# Alias OSX
 alias nvpn='sudo killall openvpn'
 alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'
 alias update-os='sudo softwareupdate -i -a; brew update; brew upgrade'
-alias ve='python3 -m venv ./venv'
-alias va='source ./venv/bin/activate'
-alias watch='watch '
-alias df='df -h'
-alias free='free -m'
-alias weather="curl -4 wttr.in/berlin"
 alias afk="pmset displaysleepnow"
-alias s='fd --type f --type l --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
-alias tldrl='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
+alias DT='tee ~/Desktop/terminalOut.txt' # pipe content to file on MacOS Desktop
+alias f='open -a Finder ./'
+alias python='python3.11'
+alias header='curl -I'
+alias ipe='curl ipinfo.io/ip' # external IP Address
+alias ipi='ipconfig getifaddr en0'                 # internal IP Address
+alias netCons='lsof -i'                            # show all open TCP/IP sockets
+alias ping='ping -c 5'                             # ping 5 times only
+alias lsock='sudo /usr/sbin/lsof -i -P'            # display open sockets
+alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'  # display only open UDP sockets
+alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'  # display only open TCP sockets
+alias openPorts='sudo lsof -i | grep LISTEN'       # all listening connections
+alias showBlocked='sudo ipfw list'                 # all ipfw rules inc/ blocked IPs
+alias ipInfo0='ipconfig getpacket en0'             # get info on connections for en0
+alias ipInfo1='ipconfig getpacket en1'             # get info on connections for en1
+alias flushDNS='dscacheutil -flushcache'           # flush out the DNS Cache
 
 # gcloud
 alias vmlist='gcloud compute instances list'
@@ -96,49 +71,7 @@ alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
 alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
 alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
 
-# gpg encryption
-alias gpg-check='gpg2 --keyserver-options auto-key-retrieve --verify'          # verify signature for isos
-alias gpg-retrieve='gpg2 --keyserver-options auto-key-retrieve --receive-keys' # receive the key of a developer
- 
-# broot
-alias br='broot -dhp'
-alias bs='broot --sizes'
-
-# kubectl:  automate kube control commands
-alias k='kubectl'
-alias kg='kubectl get'
-alias ke='kubectl edit'
-alias kd='kubectl describe'
-alias ks='kubectl scale'
-alias kl='kubectl logs'
-alias kt='kubectl top'
-alias kx='kubectl exec'
-
-# git: automate git commands
-alias gg='git status'
-alias gp='git pull'
-alias gd='git diff'
-alias gco='git checkout'
-alias gl='git log'
-alias gla="git log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%an%C(reset)%C(bold yellow)%d%C(reset) %C(dim white)- %s%C(reset)' --all"
-alias gb='git branch --sort=-committerdate | fzf --header "Checkout Recent Branch" --preview "git diff --color=always {1}" --pointer=">" | xargs git checkout' # git branch
-alias gbva='git branch -va'
-
-# networking
-alias ipe='curl ipinfo.io/ip'                      # external IP Address
-alias ipi='ipconfig getifaddr en0'                 # internal IP Address
-alias netCons='lsof -i'                            # show all open TCP/IP sockets
-alias ping='ping -c 5'                             # ping 5 times only
-alias flushDNS='dscacheutil -flushcache'           # flush out the DNS Cache
-alias lsock='sudo /usr/sbin/lsof -i -P'            # display open sockets
-alias lsockU='sudo /usr/sbin/lsof -nP | grep UDP'  # display only open UDP sockets
-alias lsockT='sudo /usr/sbin/lsof -nP | grep TCP'  # display only open TCP sockets
-alias ipInfo0='ipconfig getpacket en0'             # get info on connections for en0
-alias ipInfo1='ipconfig getpacket en1'             # get info on connections for en1
-alias openPorts='sudo lsof -i | grep LISTEN'       # all listening connections
-alias showBlocked='sudo ipfw list'                 # all ipfw rules inc/ blocked IPs
-
-# Docker config 
+# Docker config
 export DOCKER_BUILDKIT=0
 export COMPOSE_DOCKER_CLI_BUILD=0
 
@@ -179,41 +112,7 @@ rbrew_doctor() {
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-# https://github.com/jimeh/zsh-peco-history/blob/master/zsh-peco-history.zsh
-# if (( $+commands[peco] )); then
-#   if ! (( ${+ZSH_PECO_HISTORY_OPTS} )); then
-#     ZSH_PECO_HISTORY_OPTS="--layout=bottom-up"
-#   fi
-
-#   function peco_select_history() {
-#     local parse_cmd
-
-#     if (( $+commands[gtac] )); then
-#       parse_cmd="gtac"
-#     elif (( $+commands[tac] )); then
-#       parse_cmd="tac"
-#     else
-#       parse_cmd="tail -r" fi
-#     if [ -n "$ZSH_PECO_HISTORY_DEDUP" ]; then
-#       if (( $+commands[perl] )); then
-#         parse_cmd="$parse_cmd | perl -ne 'print unless \$seen{\$_}++'"
-#       elif (( $+commands[awk] )); then
-#         parse_cmd="$parse_cmd | awk '!seen[\$0]++'"
-#       else
-#         parse_cmd="$parse_cmd | uniq"
-#       fi
-#     fi
-
-#     BUFFER=$(fc -l -n 1 | eval $parse_cmd | \
-#                peco ${=ZSH_PECO_HISTORY_OPTS} --query "$LBUFFER")
-
-#     CURSOR=$#BUFFER # move cursor
-#     zle -R -c       # refresh
-#   }
-
-#   zle -N peco_select_history
-#   bindkey '^R' peco_select_history
-# fi
+source $HOME/Projects/dotfiles/aliases
 
 eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
