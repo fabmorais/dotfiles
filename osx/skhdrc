@@ -1,13 +1,10 @@
-# open terminal, blazingly fast compared to iTerm/Hyper
-
 # application shortcuts
-cmd - return : open -a /Applications/Alacritty.app
-ctrl + shift - b : open -a /Applications/Brave\ Browser.app/
-ctrl + shift - s : open -a /Applications/Slack.app
-ctrl + shift - m : open -a /Applications/Spotify.app
-ctrl + shift - j : open -a /Applications/Joplin.app
-ctrl + shift - f : open -a /Applications/Firefox.app
-ctrl + shift - 1 : open -a /Applications/1Password.app
+alt - b : open -a /Applications/Firefox.app
+alt - return : open -a /Applications/Alacritty.app
+alt + shift - return : open -a /Applications/kitty.app
+alt + shift - n : open -a /Applications/Joplin.app
+alt + shift - s : open -a /Applications/Slack.app
+alt + shift - m : open -a /Applications/Spotify.app
 
 # focus window - alt -> option/win
 alt - h : yabai -m window --focus west || \
@@ -23,23 +20,24 @@ alt - l : yabai -m window --focus east || \
           yabai -m display --focus east
 
 # swap managed window
-ctrl + alt - h : yabai -m window --swap west
-ctrl + alt - j : yabai -m window --swap south
-ctrl + alt - k : yabai -m window --swap north
-ctrl + alt - l : yabai -m window --swap east
+alt + shift - h : yabai -m window --swap west
+alt + shift - j : yabai -m window --swap south
+alt + shift - k : yabai -m window --swap north
+alt + shift - l : yabai -m window --swap east
 
 # move managed window
-ctrl + alt - y : yabai -m window --warp west
-ctrl + alt - u : yabai -m window --warp south
-ctrl + alt - i : yabai -m window --warp north
-ctrl + alt - o : yabai -m window --warp east
+# alt + shift - y : yabai -m window --warp west
+# alt + shift - u : yabai -m window --warp south
+# alt + shift - i : yabai -m window --warp north
+# alt + shift - o : yabai -m window --warp east
 
 # switch spaces/desktop
 cmd - 1 : yabai -m window --display 1 yabai -m display --focus 1
 cmd - 2 : yabai -m window --display 2 yabai -m display --focus 2
 
 # fast focus desktop
-ctrl + shift - x : yabai -m space --focus recent
+# ctrl + shift - x : yabai -m space --focus recent
+alt - tab : yabai -m space --focus recent
 
 # switch focus
 ctrl - 1 : yabai -m space --focus 1
@@ -95,11 +93,11 @@ ctrl + alt - p : $HOME/Developer/dotfiles/osx/scripts/moveWindowLeftAndFollowFoc
 ctrl + alt - n : $HOME/Developer/dotfiles/osx/scripts/moveWindowRightAndFollowFocus.sh
 
 # resize window
-ctrl + alt - a : yabai -m window --resize left:-50:0; \
-    yabai -m window --resize right:-50:0
-ctrl + alt - s : yabai -m window --resize bottom:0:50; \
-    yabai -m window --resize top:0:50
-ctrl + alt - w : yabai -m window --resize top:0:-50; \
-    yabai -m window --resize bottom:0:-50
-ctrl + alt - d : yabai -m window --resize right:50:0; \
-    yabai -m window --resize left:50:0
+ctrl + alt - left : yabai -m window --resize left:-500:0; \
+    yabai -m window --resize right:-500:0
+ctrl + alt - down : yabai -m window --resize bottom:0:500; \
+    yabai -m window --resize top:0:500
+ctrl + alt - up : yabai -m window --resize top:0:-500; \
+    yabai -m window --resize bottom:0:-500
+ctrl + alt - right : yabai -m window --resize right:500:0; \
+    yabai -m window --resize left:500:0
