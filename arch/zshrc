@@ -11,6 +11,9 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export GOPATH="${HOME}/go"
 export PATH="$PATH:$HOME/go/bin"
 
+export OPENCV_LOG_LEVEL=0
+export OPENCV_VIDEOIO_PRIORITY_INTEL_MFX=0
+
 # User configuration
 export EDITOR='nvim'
 export HISTFILESIZE=100000
