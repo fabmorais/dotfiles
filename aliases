@@ -34,6 +34,8 @@ alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
+alias nvpn='sudo killall openvpn'
+alias vpn='sudo openvpn --config $HOME/Documents/vpn/client.ovpn --daemon'
 
 # Git aliases
 alias gg='git status'
