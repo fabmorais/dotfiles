@@ -1,4 +1,5 @@
 format = """
+$os \
 $username@$hostname\
 $directory\
 $git_branch\
@@ -25,11 +26,35 @@ $character\
 [fill]
 symbol = " "
 
+[os]
+disabled = false
+style = "bold #BD93F9"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
 [username]
 show_always = true
-format = '\[[fab]($style)'
+format = '\[[$user]($style)'
 style_user = "bold #BD93F9"
-
 
 [hostname]
 ssh_only = false
@@ -84,7 +109,6 @@ style = "bright-black"
 
 [git_metrics]
 disabled = false
-
 
 # virtualization section
 [kubernetes]
