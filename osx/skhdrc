@@ -1,3 +1,6 @@
+# Reload yabai, sketchybar & skhd
+ctrl + alt + cmd - r : yabai --restart-service #&& brew services restart sketchybar && skhd --restart-service
+
 # application shortcuts
 alt - b : open -a /Applications/Firefox.app
 alt - return : open -a /Applications/Alacritty.app
@@ -8,22 +11,37 @@ alt + shift - m : open -a /Applications/Spotify.app
 
 # focus window - alt -> option/win
 alt - h : yabai -m window --focus west || \
+          yabai -m window --focus stack.prev || \
+          yabai -m window --focus stack.next || \
           yabai -m window --focus $(yabai -m query --windows --display west | \
                                     jq 'map(select(.visible == 1)) | sort_by(.frame.x, .frame.y) | last | .id') || \
           yabai -m display --focus west
 
 alt - j : yabai -m window --focus south
 alt - k : yabai -m window --focus north
+
 alt - l : yabai -m window --focus east || \
+          yabai -m window --focus stack.next || \
+          yabai -m window --focus stack.prev || \
           yabai -m window --focus $(yabai -m query --windows --display east | \
                                     jq 'map(select(.visible == 1)) | sort_by(.frame.x, .frame.y) | first | .id') || \
           yabai -m display --focus east
 
+# forward/backward in fullscreen - stack mode
+# ctrl - l : yabai -m window --focus stack.next || \
+#             yabai -m window --focus stack.prev
+# ctrl - h: yabai -m window --focus stack.prev || \
+#             yabai -m window --focus stack.next
+
 # swap managed window
-alt + shift - h : yabai -m window --swap west
-alt + shift - j : yabai -m window --swap south
-alt + shift - k : yabai -m window --swap north
-alt + shift - l : yabai -m window --swap east
+alt + shift - h : yabai -m window --swap west || \
+                    yabai -m window --swap east
+alt + shift - j : yabai -m window --swap south || \
+                    yabai -m window --swap north
+alt + shift - k : yabai -m window --swap north || \
+                    yabai -m window --swap south
+alt + shift - l : yabai -m window --swap east || \
+                    yabai -m window --swap west
 
 # move managed window
 # alt + shift - y : yabai -m window --warp west
@@ -56,14 +74,16 @@ ctrl - p : yabai -m space --focus prev
 # rotate tree
 alt - r : yabai -m space --rotate 90
 
-# toggle window fullscreen zoom
-alt - f : yabai -m window --toggle zoom-fullscreen
+# toggle window fullscreen zoom (non-native mac full screen)
+# alt - f : yabai -m window --toggle zoom-fullscreen
+# alt - f : yabai -m window --toggle zoom-parent
+alt - f : yabai -m space --layout "$(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')"
 
 # toggle padding and gap
 alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # float / unfloat window and center on screen
-alt - t : yabai -m window --toggle float;\
+alt - v : yabai -m window --toggle float;\
           yabai -m window --grid 7:5:1:1:3:5
 
 # scratchpad
