@@ -11,10 +11,11 @@ sudo yabai --load-sa
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
 yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_created action="sketchybar --bar topmost=off"
 
 # global settings
 yabai -m config \
-	mouse_follows_focus off \
+	mouse_follows_focus on \
 	focus_follows_mouse off \
 	window_origin_display default \
 	window_placement second_child \
@@ -26,8 +27,6 @@ yabai -m config \
 	normal_window_opacity 0.90 \
 	window_opacity off \
 	insert_feedback_color 0xffd75f5f \
-	active_window_border_color 0xffd75f5f \
-	normal_window_border_color 0xff555555 \
 	window_border_width 4 \
 	window_border_radius 12 \
 	window_border_blur off \
@@ -50,9 +49,10 @@ yabai -m config \
 # apps to be reinforced
 # yabai -m rule --add app="^Spotify$" manage=on
 yabai -m rule --add app="Alacritty" space=2
-yabai -m rule --add app="Spotify" space=3
+yabai -m rule --add app="Slack" space=3
+yabai -m rule --add app="Spotify" space=4
 yabai -m rule --add app="Brave" space=4
-yabai -m rule --add app="Joplin" space=6
+yabai -m rule --add app="Joplin" space=5
 
 # apps to be ignored
 yabai -m rule --add app="^(System Settings|System Information)$" manage=off
@@ -68,4 +68,5 @@ yabai -m rule --add title="^1Password$" manage=off
 yabai -m rule --add title="^(About This Mac|Library|Twilio Authy)$" manage=off
 yabai -m rule --add app="^(Visual Studio Code|Code)$" manage=off
 
+borders active_color=0xffd75f5f inactive_color=0xff494d64 width=5.0 &
 echo "yabai configuration loaded.."
