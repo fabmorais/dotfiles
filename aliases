@@ -2,7 +2,7 @@
 alias c='clear'
 alias q='exit'
 alias v='nvim'
-alias s='fd --type f --type l --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim'
+alias s='fd --type f --type l --hidden --exclude .git | fzf-tmux -p --reverse  --preview="bat --style=grid,numbers --color=always --line-range :100 {}" | xargs -r nvim'
 alias h='history'
 alias cp='cp -iv'
 alias mv='mv -iv'
