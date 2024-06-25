@@ -1,3 +1,6 @@
+# Use the color palette
+palette = "dracula"
+
 format = """
 $os \
 $username@$hostname\
@@ -28,7 +31,7 @@ symbol = " "
 
 [os]
 disabled = false
-style = "bold #BD93F9"
+style = "bold purple"
 
 [os.symbols]
 Windows = "󰍲"
@@ -54,11 +57,12 @@ RedHatEnterprise = "󱄛"
 [username]
 show_always = true
 format = '\[[$user]($style)'
-style_user = "bold #BD93F9"
+style_user = "bold purple"
+style_root = "bold orange"
 
 [hostname]
 ssh_only = false
-format = '[$ssh_symbol](bold blue)[$hostname](bold #BD93F9) '
+format = '[$ssh_symbol](bold blue)[$hostname](bold purple) '
 disabled = false
 
 [directory]
@@ -66,9 +70,9 @@ format = '[$path]($style)\]'
 truncation_length = 2
 truncation_symbol = "…/"
 read_only = " "
-style = "bold #50fa7b"
+style = "bold green"
 
-# # Here is how you can shorten some long paths by text replacement
+# Here is how you can shorten some long paths by text replacement
 [directory.substitutions]
 "Documents" = " "
 "Downloads" = ""
@@ -82,23 +86,23 @@ style = "bold #50fa7b"
 # "Important  " = "  "
 
 [character]
-success_symbol = "[❯](bold #50fa7b)"
-error_symbol = "[❯](bold #ff5555)"
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
 
 [cmd_duration]
 disabled = false
 format = '[ ⏱ $duration ]($style)'
-style = "bold #f1fa8c"
+style = "bold yellow"
 
 # git section
 [git_branch]
 symbol = ""
 format = "[ $symbol $branch]($style) "
-style = "bold #BD93F9"
+style = "bold pink"
 
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
-style = "bold #ff5555"
+style = "bold red"
 
 [git_commit]
 commit_hash_length = 8
@@ -156,3 +160,177 @@ format = '[ $symbol ($version) ]($style)'
 [java]
 symbol = " "
 format = '[$symbol ($version) ]($style)'
+
+# Colors Section
+[palettes.dracula]
+background = "#282a36"
+current_line = "#44475a"
+foreground = "#f8f8f2"
+comment = "#6272a4"
+cyan = "#8be9fd"
+green = "#50fa7b"
+orange = "#ffb86c"
+pink = "#ff79c6"
+purple = "#bd93f9"
+red = "#ff5555"
+yellow = "#f1fa8c"
+
+# normal
+[palettes.gruvbox_dark]
+background = "#282828"
+current_line = "#3c3836"
+foreground = "#ebdbb2"
+comment = "#928374"
+cyan = "#8ec07c"
+green = '#98971a'
+orange = '#d65d0e'
+pink = "#d3869b"
+purple = '#b16286'
+red = '#cc241d'
+yellow = '#d79921'
+aqua = '#689d6a'
+blue = '#458588'
+white = '#a89984'
+
+# brigther
+# [palettes.gruvbox_dark]
+# background = "#282828"
+# current_line = "#3c3836"
+# foreground = "#ebdbb2"
+# comment = "#928374"
+# cyan = "#8ec07c"
+# green = "#b8bb26"
+# orange = "#fe8019"
+# pink = "#d3869b"
+# purple = "#b16286"
+# red = "#fb4934"
+# yellow = "#fabd2f"
+
+[palettes.catppuccin_macchiato]
+background = "#24273A"
+current_line = "#494D64"
+foreground = "#CAD3F5"
+comment = "#5B6078"
+cyan = "#8BD5CA"
+green = "#A6DA95"
+orange = "#F5A97F"
+pink = "#F5BDE6"
+purple = "#C6A0F6"
+red = "#ED8796"
+yellow = "#EED49F"
+
+[palettes.catppuccin_frappe]
+background = "#303446"
+current_line = "#51576D"
+foreground = "#F2D5CF"
+comment = "#6C6F85"
+cyan = "#81C8BE"
+green = "#A6D189"
+orange = "#E78284"
+pink = "#F4B8E4"
+purple = "#CA9EE6"
+red = "#E78284"
+yellow = "#E5C890"
+
+[palettes.catppuccin_latte]
+background = "#EFF1F5"
+current_line = "#E6E9EF"
+foreground = "#4C4F69"
+cyan = "#179299"
+green = "#40A02B"
+orange = "#FE640B"
+pink = "#EA76CB"
+purple = "#8839EF"
+red = "#D20F39"
+yellow = "#DF8E1D"
+
+[palettes.catppuccin_mocha]
+background = "#1E1E2E"
+current_line = "#313244"
+foreground = "#CDD6F4"
+comment = "#6C7086"
+cyan = "#89DCEB"
+green = "#A6E3A1"
+orange = "#FAB387"
+pink = "#F5C2E7"
+purple = "#CBA6F7"
+red = "#F38BA8"
+yellow = "#F9E2AF"
+
+[palettes.cyberpunk]
+background = "#2E2E2E"
+current_line = "#3A3A3A"
+foreground = "#E8E8E8"
+comment = "#B8B8B8"
+cyan = "#00FFFF"
+green = "#00FF00"
+orange = "#FF8000"
+pink = "#FF00FF"
+purple = "#8000FF"
+red = "#FF0000"
+yellow = "#FFFF00"
+
+[palettes.tokyo_night]
+background = "#1A1B26"
+current_line = "#444B6A"
+foreground = "#C0CAF5"
+comment = "#565F89"
+cyan = "#7DCFFF"
+green = "#9ECE6A"
+orange = "#FF9E64"
+pink = "#FF75A0"
+purple = "#9D7CD8"
+red = "#F7768E"
+yellow = "#E0AF68"
+
+[palettes.nordic]
+background = "#2E3440"
+current_line = "#3B4252"
+foreground = "#D8DEE9"
+comment = "#4C566A"
+cyan = "#88C0D0"
+green = "#A3BE8C"
+orange = "#D08770"
+pink = "#B48EAD"
+purple = "#B48EAD"
+red = "#BF616A"
+yellow = "#EBCB8B"
+
+[palettes.one_dark]
+background = "#282C34"
+current_line = "#3E4451"
+foreground = "#ABB2BF"
+comment = "#5C6370"
+cyan = "#56B6C2"
+green = "#98C379"
+orange = "#D19A66"
+pink = "#C678DD"
+purple = "#C678DD"
+red = "#E06C75"
+yellow = "#E5C07B"
+
+[palettes.rose_pine]
+background = "#191724"
+current_line = "#1F1D2E"
+foreground = "#E0DEF4"
+comment = "#6E6A86"
+cyan = "#9CCFD8"
+green = "#ABE9B3"
+orange = "#F6C177"
+pink = "#EBBCBA"
+purple = "#C4A7E7"
+red = "#EB6F92"
+yellow = "#F6C177"
+
+[palettes.hardhacker]
+background = "#1C1E26"
+current_line = "#232530"
+foreground = "#E0E6F0"
+comment = "#6272A4"
+cyan = "#8BE9FD"
+green = "#50FA7B"
+orange = "#FFB86C"
+pink = "#FF79C6"
+purple = "#BD93F9"
+red = "#FF5555"
+yellow = "#F1FA8C"
