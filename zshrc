@@ -1,10 +1,9 @@
-neofetch
-
-bindkey -v
+fastfetch
 
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git vi-mode archlinux zsh-syntax-highlighting zsh-autosuggestions)
+plugins=( git sudo zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
 source $ZSH/oh-my-zsh.sh
+bindkey -v
 
 export PATH="$PATH:$HOME/.cargo/bin"
 
