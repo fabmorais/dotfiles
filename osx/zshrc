@@ -112,8 +112,6 @@ rbrew_doctor() {
   brew update && brew upgrade && brew cleanup; brew doctor
 }
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-
 source $HOME/Developer/dotfiles/aliases
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
