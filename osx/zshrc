@@ -66,6 +66,7 @@ alias showBlocked='sudo ipfw list'                 # all ipfw rules inc/ blocked
 alias ipInfo0='ipconfig getpacket en0'             # get info on connections for en0
 alias ipInfo1='ipconfig getpacket en1'             # get info on connections for en1
 alias flushDNS='dscacheutil -flushcache'           # flush out the DNS Cache
+alias tldrl='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tdlr'
 
 # gcloud
 alias vmlist='gcloud compute instances list'
