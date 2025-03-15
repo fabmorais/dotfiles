@@ -25,7 +25,8 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias weather='curl -4 wttr.in/berlin'
 cd() { builtin cd "$@"; ll; } # always list directory contents upon 'cd'
-..() { builtin cd .. "$@"; ll; } # always list directory contents upon '..'
+alias ..='cd_up'
+cd_up() { builtin cd .. "$@"; ll; }
 mcd () { mkdir -p "$1" && cd "$1"; } # makes new dir and jumps inside
 alias less='less -FSRXc'
 alias mkdir='mkdir -pv'
@@ -34,6 +35,7 @@ alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
+
 
 # Git aliases
 alias gg='git status'
@@ -58,3 +60,9 @@ alias ks='kubectl scale'
 alias kl='kubectl logs'
 alias kt='kubectl top'
 alias kx='kubectl exec'
+
+
+# copy clipboard over ssh
+pbcopy() {
+    ssh fabio@baldr "$1" | cliphist store
+}
