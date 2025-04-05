@@ -14,6 +14,7 @@ alias lt='eza -aT --icons --color=always --group-directories-first'
 alias df='df -h'
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'
+alias nano='nvim'
 alias path='echo -e ${PATH//:/\\n}'
 alias wget='wget -c'
 alias code='codium'
@@ -35,7 +36,6 @@ alias .3='cd ../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../../'
 alias .6='cd ../../../../../../'
-
 
 # Git aliases
 alias gg='git status'
