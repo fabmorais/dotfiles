@@ -2,6 +2,7 @@
 alias c='clear'
 alias q='exit'
 alias v='nvim'
+alias sv='sudo nvim'
 alias s='fd --type f --type l --hidden --exclude .git | fzf-tmux -p 80% --reverse  --preview="bat --style=grid,numbers --color=always --line-range :100 {}" | xargs -r nvim'
 alias h='history'
 alias cp='cp -iv'
@@ -15,6 +16,8 @@ alias df='df -h'
 alias ve='python3 -m venv ./venv'
 alias va='source ./venv/bin/activate'
 alias nano='nvim'
+alias oc='opencode'
+alias tf='tofu'
 alias path='echo -e ${PATH//:/\\n}'
 alias wget='wget -c'
 alias code='codium'
@@ -61,8 +64,7 @@ alias kl='kubectl logs'
 alias kt='kubectl top'
 alias kx='kubectl exec'
 
-
-# copy clipboard over ssh
-pbcopy() {
-    ssh fabio@baldr "$1" | cliphist store
-}
+# gcloud command
+alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
+alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
+alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
