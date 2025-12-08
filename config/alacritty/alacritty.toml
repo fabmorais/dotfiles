@@ -1,38 +1,51 @@
+[general]
 import = ["~/.config/alacritty/current_theme.toml"]
+# import = ["~/.config/alacritty/theme.toml"]
+
+[env]
+TERM = "xterm-256color"
+COLORTERM = "truecolor"
+
+[window]
+padding = { x = 15, y = 0 }
+opacity = 0.90
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+size = 19.0
+offset = { x = 0, y = 1 }
+glyph_offset = { x = 0, y = 0 }
+
+[font.normal]
+family = "CaskaydiaCove Nerd Font Mono"
+# family = "Terminess Nerd Font Mono"
+style = "Regular"
+
+[font.bold]
+family = "CaskaydiaCove Nerd Font Mono"
+# family = "Terminess Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "CaskaydiaCove Nerd Font Mono"
+# family = "Terminess Nerd Font Mono"
+style = "Italic"
+
+[font.bold_italic]
+family = "CaskaydiaCove Nerd Font Mono"
+# family = "Terminess Nerd Font Mono"
+style = "Bold Italic"
 
 [cursor]
 blink_interval = 600
+unfocused_hollow = true
 
 [cursor.style]
 blinking = "On"
 shape = "Block"
-
-[env]
-TERM = "xterm-256color"
-
-[font]
-size = 16.0
-
-[font.bold]
-style = "Bold"
-
-[font.bold_italic]
-style = "Bold Italic"
-
-[font.glyph_offset]
-x = 0
-y = 0
-
-[font.italic]
-style = "Italic"
-
-[font.normal]
-family = "Terminess Nerd Font Mono"
-style = "Regular"
-
-[font.offset]
-x = 0
-y = 0
 
 [[keyboard.bindings]]
 chars = " s \r"
@@ -45,13 +58,8 @@ key = "F"
 mode = "~Search"
 mods = "Control"
 
-[scrolling]
-history = 10000
-
-[shell]
+[terminal.shell]
 args = ["new-session", "-A", "-D", "-s", "main"]
 program = "/usr/bin/tmux"
 
-[window]
- padding = { x = 10, y = 0 }
- opacity = 0.85
+[terminal]

@@ -1,5 +1,4 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
-
 # Import additional configuration files
 #
 # Imports are loaded in order, skipping all missing files, with the importing
@@ -10,7 +9,6 @@
 # to the user's home directory starting with `~/`.
 # import:
 #   - themes/dracula.yml
-
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
@@ -23,7 +21,6 @@ env:
   # available, otherwise `xterm-256color` is used.
   TERM: xterm-256color
   # TERM: tmux-256color # or screen-256color
-
 window:
   # Window dimensions (changes require restart)
   #
@@ -65,7 +62,6 @@ window:
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
   opacity: 0.95
-
   # Startup Mode (changes require restart)
   #
   # Values for `startup_mode`:
@@ -73,7 +69,6 @@ window:
   #   - Maximized
   #   - Fullscreen
   #
-
 # Window title
 # title: Alacritty
 
@@ -93,11 +88,9 @@ window:
 # Commonly supported values are `dark` and `light`. Set this to `None` to use
 # the default theme variant.
 #decorations_theme_variant: None
-
 scrolling:
   history: 10000
   # multiplier: 3
-
 # Font configuration
 font:
   # Normal (roman) font face
@@ -109,11 +102,10 @@ font:
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     # family: MesloLGS NF
-    family: jetbrains mono NF
-
+    # family: jetbrains mono NF
+    family: CaskaydiaCove Nerd Font Mono
     # The `style` can be specified to pick a specific face.
     style: Regular
-
   # Bold font face
   bold:
     # Font family
@@ -124,7 +116,6 @@ font:
 
     # The `style` can be specified to pick a specific face.
     style: Bold
-
   # Italic font face
   italic:
     # Font family
@@ -135,7 +126,6 @@ font:
 
     # The `style` can be specified to pick a specific face.
     style: Italic
-
   # Bold italic font face
   bold_italic:
     # Font family
@@ -146,33 +136,28 @@ font:
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
-
   # Point size
   size: 19.0
-
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
   offset:
     x: 0
     y: 0
-
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
   # right, increasing `y` moves the glyph upward.
   glyph_offset:
     x: 0
     y: 0
-
-  # Use built-in font for box drawing characters.
-  #
-  # If `true`, Alacritty will use a custom built-in font for box drawing
-  # characters (Unicode points 2500 - 259f).
-  #
-  #builtin_box_drawing: true
+    # Use built-in font for box drawing characters.
+    #
+    # If `true`, Alacritty will use a custom built-in font for box drawing
+    # characters (Unicode points 2500 - 259f).
+    #
+    #builtin_box_drawing: true
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
-
 colors:
   primary:
     background: "#282a36"
@@ -211,7 +196,6 @@ colors:
     black: "#21222c"
     red: "#ff5555"
     green: "#50fa7b"
-
 # Dim colors
 #
 # If the dim colors are not set, they will be calculated automatically based
@@ -291,7 +275,6 @@ colors:
 
 # When set to `true`, selected text will be copied to the primary clipboard.
 #save_to_clipboard: false
-
 cursor:
   # Cursor style
   style:
@@ -352,7 +335,6 @@ shell:
     - -D
     - -s
     - main
-
 #   - (Windows) defaults to powershell, but below will defaults to Arch linux with WSL2
 # shell:
 #   program: C:\WINDOWS\system32\wsl.exe -d Arch
@@ -673,9 +655,8 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-
 key_bindings:
-  - { key: S, mods: Alt, chars: " s \x0D" }
+  - { key: S, mods: Alt, chars: " s \r" }
   # This keybinding fix tabs navigation in barbar and nvim
   # - { key: Period, mods: Alt, chars: "\x1b." } # Alt + .
   # - { key: Comma, mods: Alt, chars: "\x1b," } # Alt + ,
@@ -765,9 +746,9 @@ key_bindings:
   # - { key: NumpadAdd,      mods: Control,                         action: IncreaseFontSize }
   # - { key: Minus,          mods: Control,                         action: DecreaseFontSize }
   # - { key: NumpadSubtract, mods: Control,                         action: DecreaseFontSize }
+# (Windows only)
+# - { key: Return, mods: Alt, action: ToggleFullscreen }
 
-  # (Windows only)
-  # - { key: Return, mods: Alt, action: ToggleFullscreen }
 #debug:
 # Display the time it takes to redraw each frame.
 #render_timer: false
