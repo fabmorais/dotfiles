@@ -18,6 +18,10 @@ alias va='source ./venv/bin/activate'
 alias nano='nvim'
 alias oc='opencode'
 alias tf='tofu'
+alias tfi='tofu init'
+alias tfp='tofu plan'
+alias tfa='tofu apply'
+alias tfd='tofu destroy'
 alias path='echo -e ${PATH//:/\\n}'
 alias wget='wget -c'
 alias code='codium'
@@ -27,18 +31,19 @@ alias getpass='openssl rand -base64 20'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
-alias weather='curl -4 wttr.in/berlin'
+alias reload_trackpad='sudo rmmod i2c_hid_acpi && sudo modprobe i2c_hid_acpi'
+weather() { curl -4 "wttr.in/$1"; }
 cd() { builtin cd "$@"; ll; } # always list directory contents upon 'cd'
 alias ..='cd_up'
 cd_up() { builtin cd .. "$@"; ll; }
 mcd () { mkdir -p "$1" && cd "$1"; } # makes new dir and jumps inside
 alias less='less -FSRXc'
 alias mkdir='mkdir -pv'
-alias .2='cd ../../'
-alias .3='cd ../../../'
-alias .4='cd ../../../../'
-alias .5='cd ../../../../../'
-alias .6='cd ../../../../../../'
+alias .2='cd ../../ && ll'
+alias .3='cd ../../../ && ll'
+alias .4='cd ../../../../ && ll'
+alias .5='cd ../../../../../ && ll'
+alias .6='cd ../../../../../../ && ll'
 
 # Git aliases
 alias gg='git status'
@@ -57,14 +62,35 @@ alias gpg-retrieve='gpg2 --keyserver-options auto-key-retrieve --receive-keys' #
 # kubernetes
 alias k='kubectl'
 alias kg='kubectl get'
+alias kgp='kubectl get pods'
+alias kgn='kubectl get nodes'
 alias ke='kubectl edit'
 alias kd='kubectl describe'
 alias ks='kubectl scale'
 alias kl='kubectl logs'
 alias kt='kubectl top'
 alias kx='kubectl exec'
+alias kaf='kubectl apply -f'
+alias kdf='kubectl delete -f'
+alias kctx='kubectl config use-context'
+alias kns='kubectl config set-context --current --namespace'
 
 # gcloud command
 alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
 alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
 alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
+
+# Claude cli
+alias clmain='CLAUDE_CONFIG_DIR=~/.claude-main command claude'
+function clmcm {
+  local dir="$PWD"
+  [[ -n "$CUSTOMER_A" && "$dir" != "$CUSTOMER_A"* ]] && dir="$CUSTOMER_A"
+  ( { cd "$dir"; } >/dev/null 2>&1 && BROWSER=brave CLAUDE_CONFIG_DIR=~/.claude-mcm command claude "$@" )
+}
+function claude {
+  if [[ -n "$CUSTOMER_A" && "$PWD" == "$CUSTOMER_A"* ]]; then
+    clmcm "$@"
+  else
+    clmain "$@"
+  fi
+}

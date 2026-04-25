@@ -3,8 +3,9 @@ if [[ -z "$VSCODE_INJECTION" ]] && [[ -z "$CURSOR_INJECTION" ]] && [[ "$TERM_PRO
     fastfetch
 fi
 
+export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 export ZSH="$HOME/.oh-my-zsh"
-plugins=( git sudo zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
+plugins=( git zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
 source $ZSH/oh-my-zsh.sh
 
 bindkey -v
@@ -13,9 +14,8 @@ bindkey -v
 export JAVA_TOOL_OPTIONS="-Djdk.xml.totalEntitySizeLimit=1000000"
 export JAVA_OPTS="--enable-native-access=ALL-UNNAMED"
 
-export JAVA_HOME="/usr/lib/jvm/java-25-openjdk"
+export JAVA_HOME=/usr/lib/jvm/default
 export GOPATH="${HOME}/go"
-export CUSTOMERS="${HOME}/Projects/Customers"
 
 path_additions=(
   "$HOME/.npm-global/bin"
@@ -46,4 +46,5 @@ source $HOME/Projects/Personal/dotfiles/aliases
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
