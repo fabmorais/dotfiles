@@ -48,8 +48,28 @@ blinking = "On"
 shape = "Block"
 
 [[keyboard.bindings]]
+chars = "\u001B[13;2u"
+key = "Return"
+mods = "Shift"
+
+[[keyboard.bindings]]
 chars = " s \r"
 key = "S"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = " claude \r"
+key = "C"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = " v \r"
+key = "V"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = " gg;gp \r"
+key = "G"
 mods = "Alt"
 
 [[keyboard.bindings]]

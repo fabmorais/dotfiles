@@ -23,7 +23,7 @@ path_additions=(
   "$HOME/.cargo/bin"
   "$JAVA_HOME/bin"
   "$GOPATH/bin"
-  "$HOME/.spicetify"
+  "$HOME/.local/share/flatpak/exports/bin"
 )
 
 for p in "${path_additions[@]}"; do
