@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+# Dotfiles setup tool. Single entry point, subcommands inspired by end-4/dots-hyprland.
+#
+# Usage:
+#   ./setup install   Install or update dotfiles (idempotent).
+#   ./setup update    git pull + install + sync nvim plugins.
+#   ./setup help      Show this message.
+
+set -euo pipefail
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NVIM_REPO="" # set this to your nvim repo URL to enable auto-clone on fresh machines
+
+# ───────────────────────────────────────────────────────────────────────
+# Shared helpers
+# ───────────────────────────────────────────────────────────────────────
+
+show_help() {
+    cat <<EOF
+Usage: ./setup <subcommand>
+
+Subcommands:
+  install   Install or update dotfiles. Idempotent — safe to re-run.
+  update    git pull --ff-only, then install, then sync nvim plugins.
+  help      This message.
+EOF
+}
+
+# ───────────────────────────────────────────────────────────────────────
+# install
+# ───────────────────────────────────────────────────────────────────────
+
+cmd_install() {
+    shopt -s nullglob
+
+    # Deploy by copy (not symlink). Repo is source of truth; ~/.config is a
+    # deployed snapshot. App-generated files in ~/.config don't pollute repo.
+    # Local edits to managed files are overwritten on next install — edit in
+    # the repo, then re-run `./setup install` to deploy.
+    deploy_file() {
+        local src="$1"
+        local dst="$2"
+        # If existing destination is a symlink (from old setup), drop it.
+        [[ -L "$dst" ]] && rm "$dst"
+        install -m 644 -D "$src" "$dst"
+    }
+
+    deploy_dir() {
+        local src="$1"
+        local dst="$2"
+        [[ -L "$dst" ]] && rm "$dst"
+        mkdir -p "$dst"
+        # Mirror tracked files; don't delete app-generated files.
+        rsync -a "$src/" "$dst/"
+    }
+
+    # 1. Sanity
+    if [[ $EUID -eq 0 ]]; then
+        echo "Run as a regular user, not root." >&2
+        exit 1
+    fi
+    mkdir -p "$HOME/.config" "$HOME/.local/bin"
+
+    # 2. Packages
+    if [[ -f "$DOTFILES/packages/pacman.txt" ]]; then
+        echo "Installing pacman packages..."
+        sudo pacman -S --needed --noconfirm - <"$DOTFILES/packages/pacman.txt"
+    fi
+
+    if [[ -f "$DOTFILES/packages/aur.txt" ]]; then
+        if command -v yay >/dev/null; then
+            echo "Installing AUR packages..."
+            yay -S --needed --noconfirm - <"$DOTFILES/packages/aur.txt"
+        else
+            echo "yay not found; skipping AUR. To bootstrap yay:"
+            echo "  sudo pacman -S --needed base-devel git"
+            echo "  cd /tmp && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si"
+        fi
+    fi
+
+    if [[ -f "$DOTFILES/packages/flatpak.txt" ]]; then
+        if command -v flatpak >/dev/null; then
+            echo "Installing flatpak packages..."
+            flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+            local apps=()
+            while IFS= read -r line; do
+                [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+                apps+=("$line")
+            done <"$DOTFILES/packages/flatpak.txt"
+            if ((${#apps[@]} > 0)); then
+                flatpak install -y flathub "${apps[@]}"
+            fi
+        else
+            echo "flatpak not installed; skipping flatpak.txt. Install: sudo pacman -S flatpak"
+        fi
+    fi
+
+    # 3. External repos (nvim)
+    if [[ -n "$NVIM_REPO" && ! -d "$HOME/.config/nvim" ]]; then
+        echo "Cloning nvim repo..."
+        git clone "$NVIM_REPO" "$HOME/.config/nvim"
+    fi
+
+    # 4. config/* → ~/.config/*
+    for dir in "$DOTFILES"/config/*/; do
+        deploy_dir "$dir" "$HOME/.config/$(basename "$dir")"
+    done
+
+    # 5. Home dotfiles
+    [[ -f "$DOTFILES/zshrc" ]] && deploy_file "$DOTFILES/zshrc" "$HOME/.zshrc"
+    [[ -f "$DOTFILES/tmux.conf" ]] && deploy_file "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
+
+    # 6. Wayland sessions
+    if [[ -d "$DOTFILES/sessions" ]]; then
+        local sessions=("$DOTFILES"/sessions/*.desktop)
+        if ((${#sessions[@]} > 0)); then
+            sudo mkdir -p /usr/local/share/wayland-sessions
+            sudo install -m 644 "${sessions[@]}" /usr/local/share/wayland-sessions/
+        fi
+    fi
+
+    # 7. Default shell hint
+    if [[ "$SHELL" != *zsh ]] && command -v zsh >/dev/null; then
+        echo "Tip: 'chsh -s \$(which zsh)' to set zsh as default."
+    fi
+
+    # 8. Summary
+    echo ""
+    echo "Done. Logout and pick your Wayland session at SDDM."
+}
+
+# ───────────────────────────────────────────────────────────────────────
+# update
+# ───────────────────────────────────────────────────────────────────────
+
+cmd_update() {
+    git -C "$DOTFILES" pull --ff-only
+    cmd_install
+    if [[ -d "$HOME/.config/nvim" ]]; then
+        nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
+    fi
+    echo ""
+    echo "Update complete."
+}
+
+# ───────────────────────────────────────────────────────────────────────
+# Dispatch
+# ───────────────────────────────────────────────────────────────────────
+
+case "${1:-help}" in
+install)
+    shift
+    cmd_install "$@"
+    ;;
+update)
+    shift
+    cmd_update "$@"
+    ;;
+help | -h | --help) show_help ;;
+*)
+    echo "Unknown subcommand: $1" >&2
+    show_help
+    exit 1
+    ;;
+esac
