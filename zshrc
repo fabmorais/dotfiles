@@ -8,6 +8,17 @@ export ZSH="$HOME/.oh-my-zsh"
 plugins=( git zsh-256color zsh-autosuggestions zsh-syntax-highlighting )
 source $ZSH/oh-my-zsh.sh
 
+# Distinguish autosuggestions from real input (medium gray)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#5e5e5e'
+
+# Force unknown commands red even on monochrome palettes
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=#ff5555,bold'
+# Unclosed quotes — red so missing closing quote is obvious
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument-unclosed]='fg=#ff5555,bold'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument-unclosed]='fg=#ff5555,bold'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument-unclosed]='fg=#ff5555,bold'
+
 bindkey -v
 
 # Fix for ltex-ls crashing due to XML entity limits in LanguageTool
@@ -41,6 +52,7 @@ export OPENCV_VIDEOIO_PRIORITY_INTEL_MFX=0
 export EDITOR='nvim'
 export HISTFILESIZE=100000
 export HISTSIZE=${HISTFILESIZE}
+export LIBVIRT_DEFAULT_URI=qemu:///system
 
 source $HOME/Projects/Personal/dotfiles/aliases
 
