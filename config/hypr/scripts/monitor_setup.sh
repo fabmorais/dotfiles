@@ -9,8 +9,8 @@ connected_monitors=$(hyprctl monitors -j | jq -r '.[].name')
 
 # Disable internal monitor if external monitor is connected
 if echo "$connected_monitors" | grep -q "$EXTERNAL_MONITOR"; then
-	hyprctl dispatch dpms $INTERNAL_MONITOR off
-	hyprctl dispatch dpms $EXTERNAL_MONITOR on
+	hyprctl dispatch "hl.dsp.dpms({ action = \"disable\", monitor = \"$INTERNAL_MONITOR\" })"
+	hyprctl dispatch "hl.dsp.dpms({ action = \"enable\", monitor = \"$EXTERNAL_MONITOR\" })"
 else
-	hyprctl dispatch dpms $INTERNAL_MONITOR on
+	hyprctl dispatch "hl.dsp.dpms({ action = \"enable\", monitor = \"$INTERNAL_MONITOR\" })"
 fi
