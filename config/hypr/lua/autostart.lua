@@ -1,8 +1,7 @@
 -- autostart — sourced from hyprland.lua
 
 hl.on("hyprland.start", function()
-	-- Unlock kwallet from pam credentials (must run before any KDE app touches kwalletd6)
-	hl.exec_cmd("/usr/lib/pam_kwallet_init")
+	-- kwallet unlock (pam_kwallet_init) is handled by XDG autostart — shared with KDE.
 	hl.exec_cmd("caelestia shell -d") -- Caelestia shell
 	hl.exec_cmd("sway-audio-idle-inhibit")
 	-- hypridle managed by systemd unit (enabled, starts on graphical-session.target)
