@@ -80,7 +80,7 @@ alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
 alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
 alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
 
-# Claude cli
+# Claude cli — unsandboxed, routed by $PWD.
 alias clmain='CLAUDE_CONFIG_DIR=~/.claude-main command claude'
 function clmcm {
   local dir="$PWD"
@@ -94,3 +94,7 @@ function claude {
     clmain "$@"
   fi
 }
+
+# Sandboxed alternative, opt-in: `cage` for the personal profile,
+# `cage <profile>` for a customer one. Same config dirs, same sessions.
+# Profiles come from the CUSTOMER_<NAME> variables. See dotfiles/bin/cage.

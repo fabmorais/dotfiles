@@ -20,3 +20,6 @@ hl.config({
         pass_mouse_when_bound = false,
     },
 })
+
+-- Touchpad gestures (0.49+ keyword API; old gestures{} block was removed in 0.55)
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
