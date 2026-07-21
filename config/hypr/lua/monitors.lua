@@ -8,7 +8,8 @@ hl.monitor({
     scale = "1.25",
 })
 
--- laptop (left) dGPU
+-- laptop panel (the real active output, regardless of GPU mode). 60Hz to
+-- save battery on the iGPU; bump to @120 when plugged in / gaming if desired.
 hl.monitor({
     output = "eDP-2",
     mode = "2560x1600@120",
@@ -37,5 +38,8 @@ hl.workspace_rule({ workspace = "1", monitor = "DP-3", default = true })
 hl.workspace_rule({ workspace = "2", monitor = "DP-3" })
 hl.workspace_rule({ workspace = "3", monitor = "DP-3" })
 hl.workspace_rule({ workspace = "4", monitor = "DP-3" })
-hl.workspace_rule({ workspace = "5", monitor = "eDP-1", default = true })
-hl.workspace_rule({ workspace = "6", monitor = "eDP-1", default = true })
+-- ws 5 lives on the laptop panel. Single name-based rule: two rules broke
+-- (the absent one wins -> fallback to DP-3) and `desc:` doesn't work in
+-- workspace rules under the Lua parser. eDP-2 = dGPU (current/normal mode).
+-- If you switch to iGPU mode (panel becomes eDP-1), change this to eDP-1.
+hl.workspace_rule({ workspace = "5", monitor = "eDP-2", default = true })

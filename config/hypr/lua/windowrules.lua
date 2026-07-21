@@ -5,6 +5,16 @@ hl.window_rule({
 	match = { class = "^(steam.*)$" },
 	workspace = "4",
 })
+hl.window_rule({
+	match = { class = "^(tidal-hifi)$" },
+	workspace = "5 silent",
+})
+
+-- ─── Never steal keyboard focus on launch ─────────────────────────────
+hl.window_rule({
+	match = { class = "^(org.mozilla.Thunderbird)$" },
+	no_initial_focus = true,
+})
 
 -- ─── Opacity per app ───────────────────────────────────────────────────
 -- Hyprland 0.55+: opacity is a string "active inactive [fullscreen]" (e.g. "0.9 0.7")
@@ -19,6 +29,7 @@ opacity_rule("^(com.mitchellh.ghostty)$", 0.8)
 opacity_rule("^(Alacritty)$", 0.8)
 opacity_rule("^(brave-browser)$", 0.92)
 opacity_rule("^(firefox)$", 0.92)
+opacity_rule("^(bruno)$", 0.90)
 opacity_rule("^(FreeTube)$", 0.90)
 opacity_rule("^(io.freetubeapp.FreeTube)$", 0.90)
 opacity_rule("^(vesktop)$", 0.90)
@@ -65,7 +76,7 @@ opacity_rule("^(libreoffice-base)$", 0.90)
 opacity_rule("^(TuxGuitar)$", 0.80)
 opacity_rule("^(obsidian)$", 0.80)
 opacity_rule("^(ch.proton.bridge-gui)$", 0.90, 0.70)
-opacity_rule("^(com.mastermindzh.tidal-hifi)$", 0.90, 0.70)
+opacity_rule("^(tidal-hifi)$", 0.90, 0.70)
 opacity_rule("^(feishin)$", 0.90, 0.70)
 opacity_rule("^(codium)$", 0.80)
 opacity_rule("^(codium-url-handler)$", 0.80)
@@ -74,11 +85,16 @@ opacity_rule("^(com.saivert.pwvucontrol)$", 0.80)
 
 -- initial_class / initial_title variants
 hl.window_rule({
-	match = { initial_class = "^(com.mastermindzh.tidal-hifi)$" },
+	match = { initial_class = "^(tidal-hifi)$" },
 	opacity = "0.70 0.70",
 })
 hl.window_rule({
 	match = { initial_title = "^(Heroic Games Launcher)$" },
+	opacity = "0.70 0.70",
+})
+
+hl.window_rule({
+	match = { initial_title = "^(Discord)$" },
 	opacity = "0.70 0.70",
 })
 

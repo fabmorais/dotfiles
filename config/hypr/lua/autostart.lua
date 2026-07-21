@@ -2,7 +2,10 @@
 
 hl.on("hyprland.start", function()
 	-- kwallet unlock (pam_kwallet_init) is handled by XDG autostart — shared with KDE.
-	hl.exec_cmd("caelestia shell -d") -- Caelestia shell
+	-- Caelestia shell — via wrapper that waits for DP-3 to train before launch,
+	-- else the shell binds a stale external-monitor object and all IPC/drawer
+	-- toggles no-op on DP-3 (works on laptop, dead on external) until a restart.
+	hl.exec_cmd("$HOME/.local/bin/caelestia-boot-start")
 	hl.exec_cmd("sway-audio-idle-inhibit")
 	-- hypridle managed by systemd unit (enabled, starts on graphical-session.target)
 	hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent") -- polkit GUI prompts (timeshift, etc.)

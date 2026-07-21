@@ -8,7 +8,8 @@ hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(mod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
 hl.bind(mod .. " + Delete", hl.dsp.exec_cmd("uwsm stop")) -- clean session shutdown (uwsm-safe)
-hl.bind("CTRL + ALT + Q", hl.dsp.global("caelestia:lock"))
+-- hyprlock (no screencopy); caelestia:lock crashes on resume
+hl.bind("CTRL + ALT + Q", hl.dsp.exec_cmd("sh -c 'pidof hyprlock || hyprlock --grace 10'"))
 hl.bind(mod .. " + Backspace", hl.dsp.global("caelestia:session"))
 hl.bind(mod .. " + D", hl.dsp.window.pseudo())
 hl.bind(mod .. " + R", hl.dsp.layout("togglesplit"))
@@ -24,14 +25,14 @@ hl.bind(mod .. " + B", hl.dsp.exec_cmd("firefox", { workspace = "1" }))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("brave", { workspace = "3" }))
 hl.bind(mod .. " + O", hl.dsp.exec_cmd("/usr/bin/obsidian"))
 hl.bind(mod .. " + Y", hl.dsp.exec_cmd("io.freetubeapp.FreeTube", { workspace = "4 silent" }))
-hl.bind(mod .. " + SHIFT + M", hl.dsp.exec_cmd("com.mastermindzh.tidal-hifi", { workspace = "5 silent" }))
+hl.bind(mod .. " + SHIFT + M", hl.dsp.exec_cmd("tidal-hifi", { workspace = "5 silent" }))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd("$HOME/.local/bin/caelestia-explorer"))
 hl.bind(mod .. " + A", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle dashboard"))
 hl.bind(
-    mod .. " + N",
-    hl.dsp.exec_cmd(
-        [[sh -c 'if pgrep -x hyprsunset >/dev/null; then pkill hyprsunset && notify-send -u low "Night mode OFF"; else hyprsunset -t 4500 & notify-send -u low "Night mode ON (4500K)"; fi']]
-    )
+	mod .. " + N",
+	hl.dsp.exec_cmd(
+		[[sh -c 'if pgrep -x hyprsunset >/dev/null; then pkill hyprsunset && notify-send -u low "Night mode OFF"; else hyprsunset -t 4500 & notify-send -u low "Night mode ON (4500K)"; fi']]
+	)
 )
 hl.bind(mod .. " + W", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle sidebar"))
 hl.bind(mod .. " + SHIFT + A", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle bar"))
@@ -39,10 +40,10 @@ hl.bind(mod .. " + SPACE", hl.dsp.exec_cmd("1password --quick-access"))
 hl.bind(mod .. " + Super_L", hl.dsp.exec_cmd("caelestia shell drawers toggle launcher"))
 hl.bind(mod .. " + Z", hl.dsp.exec_cmd("$HOME/.local/bin/pin-toggle"))
 hl.bind(
-    mod .. " + X",
-    hl.dsp.exec_cmd(
-        [[sh -c 'was=$(qs -c caelestia ipc call idleInhibitor isEnabled); qs -c caelestia ipc call idleInhibitor toggle; if [ "$was" = "true" ]; then setsid -f hypridle >/dev/null 2>&1; notify-send -u low -i unlock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor OFF"; else pkill -x hypridle; notify-send -u low -i lock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor ON"; fi']]
-    )
+	mod .. " + X",
+	hl.dsp.exec_cmd(
+		[[sh -c 'was=$(qs -c caelestia ipc call idleInhibitor isEnabled); qs -c caelestia ipc call idleInhibitor toggle; if [ "$was" = "true" ]; then setsid -f hypridle >/dev/null 2>&1; notify-send -u low -i unlock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor OFF"; else pkill -x hypridle; notify-send -u low -i lock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor ON"; fi']]
+	)
 )
 hl.bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("uwsm stop")) -- nuclear: drop to SDDM
 hl.bind(mod .. " + U", hl.dsp.exec_cmd("caelestia wallpaper -r"))
@@ -56,13 +57,13 @@ hl.bind(mod .. " + C", hl.dsp.exec_cmd("pgrep -x fuzzel >/dev/null && pkill fuzz
 -- ─── Focus (arrows + vim hjkl) ─────────────────────────────────────────
 local focus_dirs = { left = "l", right = "r", up = "u", down = "d", H = "l", L = "r", K = "u", J = "d" }
 for key, dir in pairs(focus_dirs) do
-    hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = dir }))
+	hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = dir }))
 end
 
 -- ─── Move window (vim hjkl) ────────────────────────────────────────────
 local move_dirs = { H = "l", L = "r", K = "u", J = "d" }
 for key, dir in pairs(move_dirs) do
-    hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dir }))
+	hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dir }))
 end
 
 -- ─── Resize active (vim hjkl, repeat enabled) ──────────────────────────
@@ -77,9 +78,9 @@ hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- ─── Workspaces (1-10) ─────────────────────────────────────────────────
 for i = 1, 10 do
-    local key = i % 10 -- 10 → 0
-    hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
-    hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+	local key = i % 10 -- 10 → 0
+	hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+	hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Move active window to relative workspace
@@ -131,8 +132,8 @@ hl.bind(mod .. " + ALT + N", hl.dsp.exec_cmd("mirror"))
 
 -- ─── Custom scripts ────────────────────────────────────────────────────
 hl.bind(mod .. " + ALT + M", hl.dsp.exec_cmd("~/.config/waybar/scripts/asus_gpu_menu.sh")) -- ASUS GPU mode menu
-hl.bind(mod .. " + ALT + V", hl.dsp.exec_cmd("~/.local/bin/netbird-gw toggle"))            -- toggle Netbird-gw
-hl.bind(mod .. " + ALT + G", hl.dsp.exec_cmd("qs -c caelestia ipc call gameMode toggle"))  -- toggle caelestia game mode
+hl.bind(mod .. " + ALT + V", hl.dsp.exec_cmd("~/.local/bin/netbird-gw toggle")) -- toggle Netbird-gw
+hl.bind(mod .. " + ALT + G", hl.dsp.exec_cmd("qs -c caelestia ipc call gameMode toggle")) -- toggle caelestia game mode
 
 -- ─── Keyboard backlight (laptop FN+F2/F3) ──────────────────────────────
 -- No keybind needed — asusd handles Fn+F2/F3 in the EC and the keysym never
@@ -144,12 +145,15 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("$HOME/.local/bin/brightness-ad
 
 -- ─── Hardware events (lid + monitor hotplug) ───────────────────────────
 hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("systemctl suspend"), { locked = true })
-hl.bind("switch:on:DP-3", hl.dsp.exec_cmd([[hyprctl keyword monitor "eDP-1, disable"]]), { locked = true })
-hl.bind(
-    "switch:off:DP-3",
-    hl.dsp.exec_cmd([[hyprctl keyword monitor "eDP-1, 2560x1600@120, 0x0, 1.25"]]),
-    { locked = true }
-)
+-- Native Lua actions: `hyprctl keyword` is a silent no-op with the Lua
+-- config parser, so the old exec_cmd versions did nothing.
+-- Re-enabling with disabled = false picks up the settings from monitors.lua.
+hl.bind("switch:on:DP-3", function()
+	hl.monitor({ output = "eDP-1", disabled = true })
+end, { locked = true })
+hl.bind("switch:off:DP-3", function()
+	hl.monitor({ output = "eDP-1", disabled = false })
+end, { locked = true })
 
 -- ─── Screen capture ────────────────────────────────────────────────────
 hl.bind("Print", hl.dsp.exec_cmd("caelestia screenshot"), { locked = true })
@@ -164,9 +168,9 @@ hl.bind("XF86Search", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SI
 
 -- ─── ASUS M1/M2/M3 (volume up/down, mic mute) ──────────────────────────
 hl.bind(
-    "XF86AudioRaiseVolume",
-    hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"),
-    { repeating = true }
+	"XF86AudioRaiseVolume",
+	hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"),
+	{ repeating = true }
 )
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { repeating = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
@@ -181,7 +185,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true 
 hl.bind("XF86Launch1", hl.dsp.exec_cmd("rog-control-center"))
 hl.bind("XF86Launch2", hl.dsp.exec_cmd([[sh -c 'asusctl profile -n; notify-send -u low "ASUS profile changed"']]))
 hl.bind(
-    "XF86Launch3",
-    hl.dsp.exec_cmd([[sh -c 'asusctl aura effect --next-mode; notify-send -u low "Rog Aura changed"']])
+	"XF86Launch3",
+	hl.dsp.exec_cmd([[sh -c 'asusctl aura effect --next-mode; notify-send -u low "Rog Aura changed"']])
 )
 hl.bind("XF86Launch4", hl.dsp.exec_cmd([[sh -c 'asusctl profile -n; notify-send -u low "ASUS profile changed"']]))

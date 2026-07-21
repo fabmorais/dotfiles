@@ -45,6 +45,14 @@ cmd_install() {
         install -m 644 -D "$src" "$dst"
     }
 
+    # Same as deploy_file, but keeps the executable bit.
+    deploy_bin() {
+        local src="$1"
+        local dst="$2"
+        [[ -L "$dst" ]] && rm "$dst"
+        install -m 755 -D "$src" "$dst"
+    }
+
     deploy_dir() {
         local src="$1"
         local dst="$2"
@@ -110,7 +118,12 @@ cmd_install() {
     [[ -f "$DOTFILES/zshrc" ]] && deploy_file "$DOTFILES/zshrc" "$HOME/.zshrc"
     [[ -f "$DOTFILES/tmux.conf" ]] && deploy_file "$DOTFILES/tmux.conf" "$HOME/.tmux.conf"
 
-    # 6. Wayland sessions
+    # 6. bin/* → ~/.local/bin
+    for f in "$DOTFILES"/bin/*; do
+        [[ -f "$f" ]] && deploy_bin "$f" "$HOME/.local/bin/$(basename "$f")"
+    done
+
+    # 7. Wayland sessions
     if [[ -d "$DOTFILES/sessions" ]]; then
         local sessions=("$DOTFILES"/sessions/*.desktop)
         if ((${#sessions[@]} > 0)); then
@@ -119,12 +132,12 @@ cmd_install() {
         fi
     fi
 
-    # 7. Default shell hint
+    # 8. Default shell hint
     if [[ "$SHELL" != *zsh ]] && command -v zsh >/dev/null; then
         echo "Tip: 'chsh -s \$(which zsh)' to set zsh as default."
     fi
 
-    # 8. Summary
+    # 9. Summary
     echo ""
     echo "Done. Logout and pick your Wayland session at SDDM."
 }

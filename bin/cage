@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# cage — Claude Code in a bubblewrap filesystem sandbox. Host network is shared.
+#
+#   cage                     profile from $PWD
+#   cage <profile> [args]    force a profile
+#   CAGE_OFF=1 cage          no sandbox
+#
+# Profiles are the ~/.claude-<name> dirs; "main" is personal and reaches
+# everything but the secrets below. A customer profile is confined to its tree
+# under $CUSTOMERS (matched by name prefix) plus its own config dir.
+
+set -euo pipefail
+
+CLAUDE_BIN=/usr/bin/claude
+
+die() {
+	printf 'cage: %s\n' "$1" >&2
+	exit 1
+}
+
+profile_names() {
+	local d
+	for d in "$HOME"/.claude-*/; do
+		[[ -d "$d" ]] || continue
+		d="${d%/}"
+		printf '%s\n' "${d##*/.claude-}"
+	done
+}
+
+customer_root() {
+	local prof="${1,,}" d base matches=()
+	[[ ${CUSTOMERS-} && -d ${CUSTOMERS-} ]] || return 1
+	for d in "$CUSTOMERS"/*/; do
+		d="${d%/}"
+		base="${d##*/}"
+		[[ "${base,,}" == "$prof"* ]] && matches+=("$d")
+	done
+	((${#matches[@]} == 1)) || return 1
+	printf '%s\n' "${matches[0]}"
+}
+
+resolve_profile() {
+	local name root
+	[[ ${CUSTOMERS-} && "$PWD" == "$CUSTOMERS"/* ]] || {
+		printf 'main\n'
+		return
+	}
+	while read -r name; do
+		[[ $name == main ]] && continue
+		root="$(customer_root "$name")" || continue
+		[[ "$PWD" == "$root"* ]] && {
+			printf '%s\n' "$name"
+			return
+		}
+	done < <(profile_names)
+	printf 'main\n'
+}
+
+if [[ ${1-} && ${1-} != -* ]]; then
+	profile="$1"
+	shift
+else
+	profile="$(resolve_profile)"
+fi
+
+cfg="$HOME/.claude-$profile"
+[[ -d "$cfg" ]] || die "profile '$profile' has no config dir at $cfg"
+
+if [[ ${CAGE_OFF-} ]]; then
+	exec env CLAUDE_CONFIG_DIR="$cfg" "$CLAUDE_BIN" "$@"
+fi
+
+base=(
+	--ro-bind /usr /usr
+	--ro-bind /etc /etc
+	--ro-bind /opt /opt
+	--symlink usr/bin /bin
+	--symlink usr/lib /lib
+	--symlink usr/lib64 /lib64
+	--symlink usr/sbin /sbin
+	--proc /proc
+	--dev /dev
+	--tmpfs /tmp
+
+	# wipes docker.sock, the D-Bus socket and the keyring
+	--tmpfs /run
+	# /etc/resolv.conf symlinks in here; without it there is no DNS
+	--ro-bind /run/systemd/resolve /run/systemd/resolve
+
+	--ro-bind /sys /sys
+	--tmpfs /sys/firmware
+	--tmpfs /sys/kernel/security
+
+	--unshare-pid --unshare-ipc --unshare-uts --unshare-cgroup
+	--hostname cage
+	--die-with-parent
+)
+
+# node/npm live under /run and symlink into a store in $HOME; both halves needed
+if [[ ${FNM_MULTISHELL_PATH-} ]]; then
+	base+=(--ro-bind-try "$FNM_MULTISHELL_PATH" "$FNM_MULTISHELL_PATH")
+fi
+
+# no SSH agent is forwarded: signing keys stay out of reach, push/pull is manual
+base+=(--unsetenv SSH_AUTH_SOCK)
+
+if [[ $profile == main ]]; then
+	layers=(--bind "$HOME" "$HOME")
+	for d in .ssh .gnupg .aws .kube .config/gcloud .local/share/keyrings \
+		.1password .config/1Password .config/BraveSoftware .config/Bitwarden; do
+		layers+=(--tmpfs "$HOME/$d")
+	done
+	workdir="$PWD"
+else
+	root="$(customer_root "$profile")" ||
+		die "profile '$profile' matches no single directory under \$CUSTOMERS"
+
+	layers=(
+		--tmpfs "$HOME"
+		--bind "$root" "$root"
+		--bind "$cfg" "$cfg"
+		--ro-bind-try "$HOME/.gitconfig" "$HOME/.gitconfig"
+		--ro-bind-try "$HOME/.kube" "$HOME/.kube"
+		--ro-bind-try "$HOME/.local/share/fnm" "$HOME/.local/share/fnm"
+		--bind-try "$HOME/.config/gcloud" "$HOME/.config/gcloud"
+	)
+
+	workdir="$root"
+	[[ "$PWD" == "$root"* ]] && workdir="$PWD"
+fi
+
+layers+=(--unsetenv BROWSER)
+
+exec bwrap "${base[@]}" "${layers[@]}" \
+	--setenv CLAUDE_CONFIG_DIR "$cfg" \
+	--chdir "$workdir" \
+	"$CLAUDE_BIN" "$@"
