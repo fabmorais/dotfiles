@@ -56,7 +56,9 @@ resolve_profile() {
 	printf 'main\n'
 }
 
-if [[ ${1-} && ${1-} != -* ]]; then
+# A bare first argument is a profile only if it names one; anything else is a
+# prompt and belongs to Claude.
+if [[ ${1-} && ${1-} != -* && -d "$HOME/.claude-${1}" ]]; then
 	profile="$1"
 	shift
 else
@@ -130,6 +132,12 @@ else
 fi
 
 layers+=(--unsetenv BROWSER)
+
+# Claude writes ~/.claude/settings.local.json on a hardcoded path, ignoring
+# CLAUDE_CONFIG_DIR. Point it at the profile so approvals persist per profile
+# instead of piling up in $HOME.
+mkdir -p "$cfg/local"
+layers+=(--bind "$cfg/local" "$HOME/.claude")
 
 exec bwrap "${base[@]}" "${layers[@]}" \
 	--setenv CLAUDE_CONFIG_DIR "$cfg" \
