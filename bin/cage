@@ -106,12 +106,19 @@ fi
 # no SSH agent is forwarded: signing keys stay out of reach, push/pull is manual
 base+=(--unsetenv SSH_AUTH_SOCK)
 
+run="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
 if [[ $profile == main ]]; then
 	layers=(--bind "$HOME" "$HOME")
 	for d in .ssh .gnupg .aws .kube .config/gcloud .local/share/keyrings \
 		.1password .config/1Password .config/BraveSoftware .config/Bitwarden; do
 		layers+=(--tmpfs "$HOME/$d")
 	done
+
+	# hyprctl talks over this; --tmpfs /run took it away. Only the personal
+	# profile edits the desktop config, so only it gets the socket back.
+	layers+=(--ro-bind-try "$run/hypr" "$run/hypr")
+
 	workdir="$PWD"
 else
 	root="$(customer_root "$profile")" ||
@@ -129,6 +136,17 @@ else
 
 	workdir="$root"
 	[[ "$PWD" == "$root"* ]] && workdir="$PWD"
+fi
+
+# Every profile needs this one: pasting an image shells out to wl-paste, which
+# talks to the compositor. The name comes from the session, so a Plasma
+# wayland-0 works like a Hyprland wayland-1. Screencopy rides the same socket,
+# so a caged session can capture the screen — accepted, it is the price of
+# Ctrl+V. D-Bus stays out, so the keyrings remain unreachable.
+if [[ ${WAYLAND_DISPLAY-} == /* ]]; then
+	layers+=(--ro-bind-try "$WAYLAND_DISPLAY" "$WAYLAND_DISPLAY")
+elif [[ ${WAYLAND_DISPLAY-} ]]; then
+	layers+=(--ro-bind-try "$run/$WAYLAND_DISPLAY" "$run/$WAYLAND_DISPLAY")
 fi
 
 layers+=(--unsetenv BROWSER)
