@@ -45,12 +45,16 @@ cmd_install() {
         install -m 644 -D "$src" "$dst"
     }
 
-    # Same as deploy_file, but keeps the executable bit.
+    # bin/* is symlinked, NOT copied. These are pure source scripts with no
+    # app-generated siblings, so a copy only invites drift: an edit in the repo
+    # must be live immediately (cage/claude launch straight from here), and
+    # re-running install must never clobber back to a stale copy. `ln -sf`
+    # replaces whatever is there (old copy or symlink) idempotently.
     deploy_bin() {
         local src="$1"
         local dst="$2"
-        [[ -L "$dst" ]] && rm "$dst"
-        install -m 755 -D "$src" "$dst"
+        mkdir -p "$(dirname "$dst")"
+        ln -sf "$src" "$dst"
     }
 
     deploy_dir() {

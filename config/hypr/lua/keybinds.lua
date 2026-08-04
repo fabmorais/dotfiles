@@ -93,6 +93,9 @@ hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mod .. " + period", hl.dsp.focus({ workspace = "e+1" }))
 hl.bind(mod .. " + comma", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mod .. " + TAB", hl.dsp.focus({ workspace = "previous" }))
+hl.bind(mod .. "+ SHIFT + x", function()
+	hl.plugin.scrolloverview.overview("toggle")
+end)
 
 -- ─── Scratchpad (special workspace) ────────────────────────────────────
 hl.bind(mod .. " + S", hl.dsp.workspace.toggle_special("scratchpad"))

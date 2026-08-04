@@ -76,9 +76,46 @@ alias kctx='kubectl config use-context'
 alias kns='kubectl config set-context --current --namespace'
 
 # gcloud command
+# `gcloud compute ssh` runs cageed like everything else: sbx binds ONLY the dedicated
+# google_compute_engine keypair (see bin/sbx), so it works without exposing your real
+# ~/.ssh keys to the Google binary.
 alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
 alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
 alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
 
-# Claude cli — `claude` runs it plain, `cage` runs it sandboxed. Both pick the
-# profile from $PWD, or take it as an argument (`cage <profile>`). See bin/cage.
+# Cage ONLY the Google binaries. Non-Google tools (kubectl/terraform/tofu/helm/
+# helmfile) run native; the one Google binary they invoke — gke-gcloud-auth-plugin —
+# is caged via the PATH shadow at ~/.local/bin/gke-gcloud-auth-plugin.
+# $SBX prevents double-wrapping inside a sbx shell; $SBX_OFF is an explicit bypass.
+for _cmd in gcloud gsutil bq; do
+	eval "function $_cmd { [[ -n \$SBX || -n \$SBX_OFF ]] && command $_cmd \"\$@\" || sbx $_cmd \"\$@\"; }"
+done
+unset _cmd
+
+# GCP service-account, fetched from 1Password ON DEMAND (it stays unlocked, so no
+# prompt). The key never becomes a standing file or session env var — it's pulled per
+# command and dropped. sbx streams it into the cage for gcloud/gsutil/bq/gke-plugin;
+# the wrappers below hand it to the native GCP tools just for their run.
+# OP_GCP_SA_REF lives in ~/.zshenv (private).
+_gcp() {
+	local t=$1; shift
+	local k; k="$(op read "$OP_GCP_SA_REF" 2>/dev/null)" || { command "$t" "$@"; return; }
+	if [[ $t == terraform || $t == tofu ]]; then
+		GOOGLE_CREDENTIALS="$k" command "$t" "$@"        # google provider reads inline JSON, no file
+	else
+		local f; f="$(mktemp "${XDG_RUNTIME_DIR:-/run/user/$UID}/.gcp.XXXXXX")"; chmod 600 "$f"
+		printf '%s' "$k" > "$f"
+		GOOGLE_APPLICATION_CREDENTIALS="$f" command "$t" "$@"; local rc=$?
+		shred -u "$f" 2>/dev/null; return $rc            # sops (helmfile) needs a file → ephemeral, shredded
+	fi
+}
+for _c in terraform tofu helmfile; do
+	eval "function $_c { _gcp $_c \"\$@\"; }"
+done
+unset _c
+
+# Claude cli — just run `claude`: the PATH shadow (~/.local/bin/claude) sends it
+# through cage, so it is ALWAYS sandboxed, like `gcloud` goes through sbx. `cage`
+# is the underlying tool for explicit/test runs. Profile comes from $PWD
+# (personal by default, a scoped profile under $CUSTOMERS) or as an argument.
+# `CAGE_OFF=1 claude` bypasses the sandbox. See bin/cage.

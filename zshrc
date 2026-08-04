@@ -59,5 +59,5 @@ source $HOME/Projects/Personal/dotfiles/aliases
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
-eval "$(atuin init zsh --disable-up-arrow)"
+eval "$(atuin init zsh --disable-up-arrow --disable-ai)"
 eval "$(fnm env --use-on-cd)"

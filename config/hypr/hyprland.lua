@@ -14,6 +14,7 @@ require("lua.animations")
 require("lua.misc")
 require("lua.windowrules")
 require("lua.keybinds")
+require("lua.scroll-pl")
 
 -- scrolling.lua exists but is opt-in. Uncomment to enable the scrolling layout
 -- for workspace 3.

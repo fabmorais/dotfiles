@@ -132,6 +132,7 @@ else
 		--ro-bind-try "$HOME/.kube" "$HOME/.kube"
 		--ro-bind-try "$HOME/.local/share/fnm" "$HOME/.local/share/fnm"
 		--bind-try "$HOME/.config/gcloud" "$HOME/.config/gcloud"
+		--bind-try "$HOME/.config/glab-cli" "$HOME/.config/glab-cli"
 	)
 
 	workdir="$root"
@@ -151,12 +152,45 @@ fi
 
 layers+=(--unsetenv BROWSER)
 
-# Claude writes ~/.claude/settings.local.json on a hardcoded path, ignoring
-# CLAUDE_CONFIG_DIR. Point it at the profile so approvals persist per profile
-# instead of piling up in $HOME.
-mkdir -p "$cfg/local"
-layers+=(--bind "$cfg/local" "$HOME/.claude")
+# glab's token lives in the OS keyring, which --tmpfs /run makes unreachable
+# inside the jail (D-Bus socket gone). Rather than bind the bus back — which
+# would expose the *whole* keyring to a customer session — the token is stored
+# as plaintext under its host in ~/.config/glab-cli/config.yml (use_keyring
+# false). That file is already bound in, so glab authenticates from it.
 
+# Private Go modules (`go mod download`) clone from a customer git host over
+# SSH. The usual auth key lives in the 1Password agent, which cannot cross a
+# bwrap namespace (proven, not a missing bind), so cloning uses dedicated
+# on-disk keys at ~/.ssh/cage_<profile> — generated with no passphrase, .pub
+# registered on the git host. A customer profile gets only its own key; the
+# personal profile offers every cage_* key it has (each host accepts its own),
+# so main can clone the same customer hosts. Only these keys (read-only) plus
+# known_hosts are exposed — the agent and all other keys stay out.
+# GIT_SSH_COMMAND forces them with IdentitiesOnly (no agent lookup); the host
+# gitconfig's HTTPS→SSH rewrite is kept so HTTPS clone URLs resolve to SSH.
+# Commit signing (1Password op-ssh-sign) still won't work in the jail.
+ssh_keys=()
+if [[ $profile == main ]]; then
+	for k in "$HOME"/.ssh/cage_*; do
+		[[ -f $k && $k != *.pub ]] && ssh_keys+=("$k")
+	done
+else
+	[[ -f "$HOME/.ssh/cage_$profile" ]] && ssh_keys+=("$HOME/.ssh/cage_$profile")
+fi
+if ((${#ssh_keys[@]})); then
+	ssh_cmd="ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+	for k in "${ssh_keys[@]}"; do
+		layers+=(--ro-bind "$k" "$k")
+		ssh_cmd+=" -i $k"
+	done
+	layers+=(--ro-bind-try "$HOME/.ssh/known_hosts" "$HOME/.ssh/known_hosts")
+	layers+=(--setenv GIT_SSH_COMMAND "$ssh_cmd")
+	unset ssh_cmd
+fi
+unset ssh_keys k
+
+# Claude reads and writes everything (settings.local.json included) under
+# CLAUDE_CONFIG_DIR, so nothing here touches ~/.claude — it must never exist.
 exec bwrap "${base[@]}" "${layers[@]}" \
 	--setenv CLAUDE_CONFIG_DIR "$cfg" \
 	--chdir "$workdir" \
