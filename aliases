@@ -60,6 +60,13 @@ alias gpg-check='gpg2 --keyserver-options auto-key-retrieve --verify' # verify s
 alias gpg-retrieve='gpg2 --keyserver-options auto-key-retrieve --receive-keys' # received keys
 
 # kubernetes
+# Inside the Claude Code command sandbox the injected egress proxy is the ONLY route
+# out, but its NO_PROXY carries the RFC1918 ranges — so client-go bypasses the proxy
+# for internal IPs (e.g. a private control plane) and hits the empty sandbox netns →
+# "network is unreachable". Narrow NO_PROXY to loopback so kubectl goes via the proxy.
+# Harmless outside the sandbox (no proxy set → direct). All k* below inherit this by
+# zsh recursive alias expansion; `command` avoids re-expanding onto this alias.
+alias kubectl='NO_PROXY=localhost,127.0.0.1,::1 no_proxy=localhost,127.0.0.1,::1 command kubectl'
 alias k='kubectl'
 alias kg='kubectl get'
 alias kgp='kubectl get pods'
@@ -83,11 +90,12 @@ alias ssha='gcloud compute ssh --internal-ip --zone=europe-west3-a'
 alias sshb='gcloud compute ssh --internal-ip --zone=europe-west3-b'
 alias sshc='gcloud compute ssh --internal-ip --zone=europe-west3-c'
 
-# Cage ONLY the Google binaries. Non-Google tools (kubectl/terraform/tofu/helm/
-# helmfile) run native; the one Google binary they invoke — gke-gcloud-auth-plugin —
-# is caged via the PATH shadow at ~/.local/bin/gke-gcloud-auth-plugin.
+# Cage ONLY the vendor CLIs (Google + AWS). Vendor-neutral tools (kubectl/terraform/
+# tofu/helm/helmfile) run native; the one Google binary they invoke —
+# gke-gcloud-auth-plugin — is caged via the PATH shadow at
+# ~/.local/bin/gke-gcloud-auth-plugin. `aws` only ever sees ~/.aws, ~/.kube and $PWD.
 # $SBX prevents double-wrapping inside a sbx shell; $SBX_OFF is an explicit bypass.
-for _cmd in gcloud gsutil bq; do
+for _cmd in gcloud gsutil bq aws; do
 	eval "function $_cmd { [[ -n \$SBX || -n \$SBX_OFF ]] && command $_cmd \"\$@\" || sbx $_cmd \"\$@\"; }"
 done
 unset _cmd

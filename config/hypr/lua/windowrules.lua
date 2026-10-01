@@ -173,11 +173,13 @@ hl.window_rule({
 hl.window_rule({ match = { initial_title = "^(Friends List)$" }, float = true })
 hl.window_rule({ match = { title = "^(Friends List)$" }, float = true })
 
+-- suppress_event: Ente re-maximizes itself on every start.
 hl.window_rule({
 	name = "ente-auth-float",
 	match = { class = "^(io.ente.auth)$" },
 	float = true,
 	size = "800 600",
+	suppress_event = "maximize",
 })
 
 -- ─── Picture-in-Picture (FreeTube, Firefox, Brave, Chromium) ───────────
