@@ -76,13 +76,23 @@ base=(
 	--ro-bind /usr /usr
 	--ro-bind /etc /etc
 	--ro-bind /opt /opt
+
+	# bwrap's userns maps host root→nobody(65534), so every Include'd ssh
+	# drop-in looks unowned and ssh aborts: "Bad owner or permissions on
+	# /etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf", killing git-over-ssh.
+	# Blank the dir so the Include glob in /etc/ssh/ssh_config matches nothing
+	# (those systemd/libvirt proxy drop-ins are useless in here anyway); the
+	# top-level config isn't perm-checked, so it still loads.
+	--tmpfs /etc/ssh/ssh_config.d
 	--symlink usr/bin /bin
 	--symlink usr/lib /lib
 	--symlink usr/lib64 /lib64
 	--symlink usr/sbin /sbin
 	--proc /proc
 	--dev /dev
-	--tmpfs /tmp
+	# host /tmp shared in: lets the harness scratchpad (/tmp/claude-*) persist
+	# and be visible on the host. Accepted local-reach tradeoff (all profiles).
+	--bind /tmp /tmp
 
 	# wipes docker.sock, the D-Bus socket and the keyring
 	--tmpfs /run
@@ -110,7 +120,7 @@ run="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
 if [[ $profile == main ]]; then
 	layers=(--bind "$HOME" "$HOME")
-	for d in .ssh .gnupg .aws .kube .config/gcloud .local/share/keyrings \
+	for d in .ssh .gnupg .aws .local/share/keyrings \
 		.1password .config/1Password .config/BraveSoftware .config/Bitwarden; do
 		layers+=(--tmpfs "$HOME/$d")
 	done
@@ -118,6 +128,19 @@ if [[ $profile == main ]]; then
 	# hyprctl talks over this; --tmpfs /run took it away. Only the personal
 	# profile edits the desktop config, so only it gets the socket back.
 	layers+=(--ro-bind-try "$run/hypr" "$run/hypr")
+
+	# System logs, for debugging this machine (GPU hangs, crashes, pacman).
+	# Read-only, and main only — a customer session has no business reading
+	# the host's logs. /run/log is the volatile journal (empty when journald
+	# storage is persistent), /var/log the persistent one.
+	# NOTE: this exposes the *files*; whether journalctl can parse them is a
+	# permissions question. $USER reads the system journal through the wheel
+	# group ACL, and bwrap's userns maps every supplementary group to nobody,
+	# so system.journal stays unreadable in here unless the journal dir also
+	# carries a uid-based ACL (setfacl -m d:u:$USER:r,u:$USER:r on it). The user
+	# journal (ACL'd by uid) and root-readable logs like pacman.log work.
+	layers+=(--ro-bind-try /var/log /var/log)
+	layers+=(--ro-bind-try /run/log /run/log)
 
 	workdir="$PWD"
 else
@@ -150,7 +173,33 @@ elif [[ ${WAYLAND_DISPLAY-} ]]; then
 	layers+=(--ro-bind-try "$run/$WAYLAND_DISPLAY" "$run/$WAYLAND_DISPLAY")
 fi
 
-layers+=(--unsetenv BROWSER)
+# Browsers can't run in the jail (namespaced PIDs make Chromium treat the host
+# SingletonLock as stale). xdg-open/brave/firefox become a stub writing the URL
+# to a FIFO; a host-side loop hands it to the running browser and exits with
+# bwrap (exec keeps our PID). Lives under /tmp/claude so the per-command Bash
+# sandbox can write to it too.
+mkdir -p -m 700 /tmp/claude
+bridge=$(mktemp -d /tmp/claude/cage-open.XXXXXX)
+mkfifo "$bridge/fifo"
+printf '#!/bin/sh\nfor u; do :; done\necho "${0##*/} $u" >"$CAGE_OPEN_FIFO"\n' >"$bridge/open"
+chmod +x "$bridge/open"
+(
+	exec 3<>"$bridge/fifo"
+	while kill -0 $$ 2>/dev/null; do
+		read -r -t 2 -u 3 b url || continue
+		[[ $url =~ ^https?://[^[:space:]]+$ ]] || continue
+		case $b in
+		brave | firefox) "$b" "$url" ;;
+		# same per-tmux-session pick as prefix+u (main→firefox, else brave)
+		*) ~/.local/bin/tmux-browser "$url" ;;
+		esac &
+	done
+	rm -rf "$bridge"
+) &>/dev/null &
+for b in xdg-open brave firefox; do
+	layers+=(--ro-bind "$bridge/open" "/usr/bin/$b")
+done
+layers+=(--setenv CAGE_OPEN_FIFO "$bridge/fifo" --setenv BROWSER xdg-open)
 
 # glab's token lives in the OS keyring, which --tmpfs /run makes unreachable
 # inside the jail (D-Bus socket gone). Rather than bind the bus back — which

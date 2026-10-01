@@ -1,37 +1,64 @@
 -- Monitor layout and workspace pinning — sourced from hyprland.lua
 
--- laptop (left) iGPU
-hl.monitor({
-    output = "eDP-1",
-    mode = "2560x1600@60",
-    position = "0x0",
-    scale = "1.25",
-})
+-- Layout is dynamic: Wine/Proton treats the output at 0x0 as the primary
+-- monitor, so when the ultrawide (DP-3) is connected it owns the origin and
+-- the laptop panel sits at negative X (physical layout unchanged: laptop
+-- left, ultrawide right). Without DP-3 the laptop goes back to 0x0.
+local LAPTOP_W = 2048 -- 2560 / 1.25 (logical width)
 
--- laptop panel (the real active output, regardless of GPU mode). 60Hz to
--- save battery on the iGPU; bump to @120 when plugged in / gaming if desired.
-hl.monitor({
-    output = "eDP-2",
-    mode = "2560x1600@120",
-    position = "0x0",
-    scale = "1.25",
-})
+local function has_output(name, removed)
+	local removed_name = type(removed) == "table" and removed.name or removed
+	for _, m in ipairs(hl.get_monitors()) do
+		if m.name == name and m.name ~= removed_name then
+			return true
+		end
+	end
+	return false
+end
 
--- external ultrawide (right)
-hl.monitor({
-    output = "DP-3",
-    mode = "3440x1440@165",
-    position = "2048x0",
-    scale = "1",
-})
+local function apply_layout(removed)
+	local lx = has_output("DP-3", removed) and -LAPTOP_W or 0
 
--- projector above laptop
-hl.monitor({
-    output = "HDMI-A-1",
-    mode = "1920x1080@60",
-    position = "960x-1080",
-    scale = "1",
-})
+	-- laptop panel on iGPU mode
+	hl.monitor({
+		output = "eDP-1",
+		mode = "2560x1600@60",
+		position = lx .. "x0",
+		scale = "1.25",
+	})
+
+	-- laptop panel (the real active output, regardless of GPU mode)
+	hl.monitor({
+		output = "eDP-2",
+		mode = "2560x1600@120",
+		position = lx .. "x0",
+		scale = "1.25",
+	})
+
+	-- external ultrawide (right)
+	hl.monitor({
+		output = "DP-3",
+		mode = "3440x1440@165",
+		position = "0x0",
+		scale = "1",
+	})
+
+	-- projector above laptop
+	hl.monitor({
+		output = "HDMI-A-1",
+		mode = "1920x1080@60",
+		position = (lx + 960) .. "x-1080",
+		scale = "1",
+	})
+end
+
+apply_layout()
+hl.on("monitor.added", function()
+	apply_layout()
+end)
+hl.on("monitor.removed", function(m)
+	apply_layout(m)
+end)
 
 -- Workspace → monitor pinning
 hl.workspace_rule({ workspace = "1", monitor = "DP-3", default = true })
