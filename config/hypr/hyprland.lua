@@ -19,3 +19,11 @@ require("lua.keybinds")
 -- scrolling.lua exists but is opt-in. Uncomment to enable the scrolling layout
 -- for workspace 3.
 -- require("lua.scrolling")
+
+
+-- For Noctalia Color templates
+local ok, noctalia = pcall(require, "noctalia")
+if ok then noctalia.apply_theme() end
+
+-- For Noctalia Color templates
+require("noctalia").apply_theme()
