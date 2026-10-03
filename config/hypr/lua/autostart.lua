@@ -2,10 +2,10 @@
 
 hl.on("hyprland.start", function()
     -- kwallet unlock (pam_kwallet_init) is handled by XDG autostart — shared with KDE.
-    -- Caelestia shell — via wrapper that waits for DP-3 to train before launch,
-    -- else the shell binds a stale external-monitor object and all IPC/drawer
-    -- toggles no-op on DP-3 (works on laptop, dead on external) until a restart.
-    hl.exec_cmd("$HOME/.local/bin/caelestia-boot-start")
+    -- Noctalia shell — start first so it claims the tray watcher before tray apps register.
+    -- Its storage key must live in the PAM-unlocked "login" keyring (set as default), or
+    -- the clipboard history comes up empty after every boot.
+    hl.exec_cmd("noctalia -d")
     hl.exec_cmd("sway-audio-idle-inhibit")
     -- hypridle managed by systemd unit (enabled, starts on graphical-session.target)
     hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent") -- polkit GUI prompts (timeshift, etc.)
@@ -25,8 +25,10 @@ hl.on("hyprland.start", function()
     -- window with no sync in it.
     hl.exec_cmd("sleep 5 && filen-desktop")
 
-    -- Watch caelestia scheme changes → sync to all apps (alacritty, starship, ...)
-    hl.exec_cmd("$HOME/.local/bin/caelestia-scheme-watcher")
+    -- OpenSnitch firewall prompts/tray (daemon is the opensnitchd system service).
+    -- Delayed so Noctalia already owns the tray watcher; the XDG autostart entry in
+    -- ~/.config/autostart stays Hidden=true to avoid a second instance.
+    hl.exec_cmd("sleep 3 && opensnitch-ui")
 
     -- Fn+F2/F3 are swallowed by asusd at the EC, so a key bind never fires.
     -- Watch asusd's D-Bus PropertiesChanged signal instead and emit OSD notifs.

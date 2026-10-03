@@ -1,1 +1,3 @@
 .DS_Store
+config/hypr/noctalia.lua
+config/hypr/hyprlock-colors.conf

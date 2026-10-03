@@ -27,6 +27,7 @@ end
 
 opacity_rule("^(com.mitchellh.ghostty)$", 0.8)
 opacity_rule("^(Alacritty)$", 0.8)
+opacity_rule("^(kitty)$", 0.8)
 opacity_rule("^(brave-browser)$", 0.92)
 opacity_rule("^(firefox)$", 0.92)
 opacity_rule("^(bruno)$", 0.90)
@@ -179,6 +180,18 @@ hl.window_rule({
 	match = { class = "^(io.ente.auth)$" },
 	float = true,
 	size = "800 600",
+	suppress_event = "maximize",
+})
+
+-- kitty requests maximized on map (fullscreenClient=1) — keep it tiled.
+hl.window_rule({
+	match = { class = "^(kitty)$" },
+	suppress_event = "maximize",
+})
+
+-- LibreOffice requests maximized on map (class changes per module) — keep it tiled.
+hl.window_rule({
+	match = { class = "^(libreoffice-.*)$" },
 	suppress_event = "maximize",
 })
 

@@ -10,7 +10,7 @@ hl.bind(mod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", a
 hl.bind(mod .. " + Delete", hl.dsp.exec_cmd("uwsm stop")) -- clean session shutdown (uwsm-safe)
 -- hyprlock (no screencopy); caelestia:lock crashes on resume
 hl.bind("CTRL + ALT + Q", hl.dsp.exec_cmd("sh -c 'pidof hyprlock || hyprlock --grace 10'"))
-hl.bind(mod .. " + Backspace", hl.dsp.global("caelestia:session"))
+hl.bind(mod .. " + Backspace", hl.dsp.exec_cmd("noctalia msg panel-toggle session"))
 hl.bind(mod .. " + D", hl.dsp.window.pseudo())
 hl.bind(mod .. " + R", hl.dsp.layout("togglesplit"))
 
@@ -26,33 +26,30 @@ hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("brave", { workspace = "3" }))
 hl.bind(mod .. " + O", hl.dsp.exec_cmd("/usr/bin/obsidian"))
 hl.bind(mod .. " + Y", hl.dsp.exec_cmd("io.freetubeapp.FreeTube", { workspace = "4 silent" }))
 hl.bind(mod .. " + SHIFT + M", hl.dsp.exec_cmd("tidal-hifi", { workspace = "5 silent" }))
-hl.bind(mod .. " + E", hl.dsp.exec_cmd("$HOME/.local/bin/caelestia-explorer"))
-hl.bind(mod .. " + A", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle dashboard"))
-hl.bind(
-    mod .. " + N",
-    hl.dsp.exec_cmd(
-        [[sh -c 'if pgrep -x hyprsunset >/dev/null; then pkill hyprsunset && notify-send -u low "Night mode OFF"; else hyprsunset -t 4500 & notify-send -u low "Night mode ON (4500K)"; fi']]
-    )
-)
-hl.bind(mod .. " + W", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle sidebar"))
-hl.bind(mod .. " + SHIFT + A", hl.dsp.exec_cmd("qs -c caelestia ipc call drawers toggle bar"))
+hl.bind(mod .. " + E", hl.dsp.exec_cmd("dolphin"))
+hl.bind(mod .. " + A", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"))
+-- Manual override on top of Noctalia's scheduled night light (hyprsunset would fight it)
+hl.bind(mod .. " + N", hl.dsp.exec_cmd("noctalia msg nightlight-force-toggle"))
+hl.bind(mod .. " + W", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"))
+hl.bind(mod .. " + SHIFT + A", hl.dsp.exec_cmd("noctalia msg bar-toggle"))
 hl.bind(mod .. " + SPACE", hl.dsp.exec_cmd("1password --quick-access"))
-hl.bind(mod .. " + Super_L", hl.dsp.exec_cmd("caelestia shell drawers toggle launcher"))
+hl.bind(mod .. " + Super_L", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
 hl.bind(mod .. " + Z", hl.dsp.exec_cmd("$HOME/.local/bin/pin-toggle"))
 hl.bind(
     mod .. " + X",
     hl.dsp.exec_cmd(
-        [[sh -c 'was=$(qs -c caelestia ipc call idleInhibitor isEnabled); qs -c caelestia ipc call idleInhibitor toggle; if [ "$was" = "true" ]; then setsid -f hypridle >/dev/null 2>&1; notify-send -u low -i unlock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor OFF"; else pkill -x hypridle; notify-send -u low -i lock -h string:x-canonical-private-synchronous:idleinhibit "Idle inhibitor ON"; fi']]
+        [[sh -c 'if pgrep -x hypridle >/dev/null; then noctalia msg caffeine-enable; pkill -x hypridle; else noctalia msg caffeine-disable; setsid -f hypridle >/dev/null 2>&1; fi']]
     )
 )
 hl.bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("uwsm stop")) -- nuclear: drop to SDDM
-hl.bind(mod .. " + U", hl.dsp.exec_cmd("caelestia wallpaper -r"))
-hl.bind(mod .. " + I", hl.dsp.exec_cmd("$HOME/.local/bin/caelestia-controlcenter-toggle"))
+hl.bind(mod .. " + U", hl.dsp.exec_cmd("noctalia msg wallpaper-random"))
+hl.bind(mod .. " + I", hl.dsp.exec_cmd("noctalia msg settings-toggle"))
 hl.bind(mod .. " + slash", hl.dsp.exec_cmd("$HOME/.local/bin/binds-help"))
 hl.bind(mod .. " + SHIFT + G", hl.dsp.exec_cmd("$HOME/.local/bin/gamelauncher"))
 
 -- ─── Clipboard ─────────────────────────────────────────────────────────
-hl.bind(mod .. " + C", hl.dsp.exec_cmd("pgrep -x fuzzel >/dev/null && pkill fuzzel || caelestia clipboard"))
+-- Noctalia's own clipboard history (separate from cliphist, which the autostart watchers still feed)
+hl.bind(mod .. " + C", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
 
 -- ─── Focus (arrows + vim hjkl) ─────────────────────────────────────────
 local focus_dirs = { left = "l", right = "r", up = "u", down = "d", H = "l", L = "r", K = "u", J = "d" }
@@ -138,15 +135,14 @@ hl.bind(mod .. " + ALT + N", hl.dsp.exec_cmd("mirror"))
 -- ─── Custom scripts ────────────────────────────────────────────────────
 hl.bind(mod .. " + ALT + M", hl.dsp.exec_cmd("~/.config/waybar/scripts/asus_gpu_menu.sh")) -- ASUS GPU mode menu
 hl.bind(mod .. " + ALT + V", hl.dsp.exec_cmd("~/.local/bin/netbird-gw toggle"))            -- toggle Netbird-gw
-hl.bind(mod .. " + ALT + G", hl.dsp.exec_cmd("qs -c caelestia ipc call gameMode toggle"))  -- toggle caelestia game mode
 
 -- ─── Keyboard backlight (laptop FN+F2/F3) ──────────────────────────────
 -- No keybind needed — asusd handles Fn+F2/F3 in the EC and the keysym never
 -- reaches Wayland. OSD notif fired by kb-bright-watcher (see autostart).
 
 -- ─── Display backlight (laptop FN+F7/F8) ───────────────────────────────
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("$HOME/.local/bin/brightness-adjust up"), { repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("$HOME/.local/bin/brightness-adjust down"), { repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("noctalia msg brightness-up"), { repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { repeating = true })
 
 -- ─── Hardware events (lid + monitor hotplug) ───────────────────────────
 hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("systemctl suspend"), { locked = true })
@@ -161,10 +157,10 @@ hl.bind("switch:off:DP-3", function()
 end, { locked = true })
 
 -- ─── Screen capture ────────────────────────────────────────────────────
-hl.bind("Print", hl.dsp.exec_cmd("caelestia screenshot"), { locked = true })
-hl.bind(mod .. " + P", hl.dsp.exec_cmd("caelestia screenshot --region"))
+hl.bind("Print", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"), { locked = true })
+hl.bind(mod .. " + P", hl.dsp.exec_cmd("noctalia msg screenshot-region"))
 hl.bind(mod .. " + CTRL + P", hl.dsp.exec_cmd("hyprpicker -an"))
-hl.bind(mod .. " + SHIFT + P", hl.dsp.exec_cmd("caelestia screenshot"))
+hl.bind(mod .. " + SHIFT + P", hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"))
 
 -- ─── Multimedia (FN+F1/F2/F3) ──────────────────────────────────────────
 hl.bind("XF86Explorer", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
